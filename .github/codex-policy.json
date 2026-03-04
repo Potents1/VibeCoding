@@ -1,0 +1,16 @@
+{
+  "patch_label": "codex:patch",
+  "review_label": "codex:review",
+  "allowed_patch_dirs": [
+    "agentsystem/",
+    "app/",
+    "agent-dashboard/src/",
+    "tests/",
+    ".github/workflows/"
+  ],
+  "required_checks_before_merge": [
+    "CI/CD Pipeline",
+    "Fullstack CI",
+    "E2E"
+  ]
+}

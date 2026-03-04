@@ -1,0 +1,27 @@
+name: run-e2e
+description: Run Playwright/Cypress tests when config is present.
+inputs:
+  working-directory:
+    description: E2E project directory
+    required: false
+    default: "agent-dashboard"
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ ! -f package.json ]; then
+          echo "No package.json in $PWD; skipping E2E."
+          exit 0
+        fi
+        if [ -f playwright.config.ts ] || [ -f playwright.config.js ]; then
+          npx playwright install --with-deps
+          npm run e2e --if-present
+          exit 0
+        fi
+        if [ -f cypress.config.ts ] || [ -f cypress.config.js ]; then
+          npm run e2e --if-present
+          exit 0
+        fi
+        echo "No Playwright/Cypress config found; skipping E2E."

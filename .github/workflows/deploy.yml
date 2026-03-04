@@ -1,6 +1,16 @@
 name: Deploy
 
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: false
+        type: string
+        default: dev
+      deploy_path:
+        required: false
+        type: string
+        default: ""
   workflow_run:
     workflows: [ "Build Package" ]
     types: [ completed ]
@@ -57,7 +67,11 @@ jobs:
             release_id="$(date +%Y%m%d%H%M%S)-${{ github.event.workflow_run.head_sha }}"
             release_id="${release_id:0:24}"
           else
-            target_env="${{ github.event.inputs.environment }}"
+            if [ "${{ github.event_name }}" = "workflow_call" ]; then
+              target_env="${{ inputs.environment }}"
+            else
+              target_env="${{ github.event.inputs.environment }}"
+            fi
             should_deploy="true"
           fi
 
@@ -85,8 +99,8 @@ jobs:
           path: artifact
           if_no_artifact_found: fail
 
-      - name: Build artifact locally for manual dispatch
-        if: github.event_name == 'workflow_dispatch'
+      - name: Build artifact locally for reusable/manual dispatch
+        if: github.event_name != 'workflow_run'
         shell: powershell
         run: |
           New-Item -ItemType Directory -Force -Path artifact | Out-Null
@@ -113,6 +127,7 @@ jobs:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |
           $deployPath = "${{ github.event.inputs.deploy_path }}"
+          if (-not $deployPath) { $deployPath = "${{ inputs.deploy_path }}" }
           if (-not $deployPath) { $deployPath = $env:AGI_DEV_DEPLOY_PATH }
           if (-not $deployPath) { $deployPath = "C:\Users\peter\source\repos\AGI-dev" }
           ./scripts/cicd/deploy_dev.ps1 `
@@ -146,6 +161,7 @@ jobs:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |
           $deployPath = "${{ github.event.inputs.deploy_path }}"
+          if (-not $deployPath) { $deployPath = "${{ inputs.deploy_path }}" }
           if (-not $deployPath) { $deployPath = $env:AGI_DEV_DEPLOY_PATH }
           if (-not $deployPath) { $deployPath = "C:\Users\peter\source\repos\AGI-dev" }
           @"

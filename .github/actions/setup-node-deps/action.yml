@@ -1,0 +1,27 @@
+name: setup-node-deps
+description: Install Node and project dependencies with npm ci.
+inputs:
+  node-version:
+    description: Node.js version
+    required: false
+    default: "20"
+  working-directory:
+    description: Directory containing package-lock.json
+    required: false
+    default: "."
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: npm
+        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+    - shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          echo "No package-lock.json in $PWD; skipping npm ci."
+        fi

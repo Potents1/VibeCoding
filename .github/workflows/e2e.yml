@@ -1,0 +1,36 @@
+name: E2E
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: "20"
+      working-directory:
+        required: false
+        type: string
+        default: "agent-dashboard"
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-deps
+        with:
+          node-version: ${{ inputs.node-version || '20' }}
+          working-directory: ${{ inputs.working-directory || 'agent-dashboard' }}
+      - uses: ./.github/actions/run-e2e
+        with:
+          working-directory: ${{ inputs.working-directory || 'agent-dashboard' }}

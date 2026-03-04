@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  workflow_call:
+    inputs:
+      release-tag:
+        required: true
+        type: string
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: "Tag to release (example: v1.0.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve tag
+        id: tag
+        shell: bash
+        run: |
+          tag="${{ inputs.release-tag }}"
+          if [ -z "$tag" ]; then
+            tag="${{ github.event.inputs.release-tag }}"
+          fi
+          if [ -z "$tag" ]; then
+            tag="${GITHUB_REF_NAME}"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false

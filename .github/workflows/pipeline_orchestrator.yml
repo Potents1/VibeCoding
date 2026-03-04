@@ -1,0 +1,75 @@
+name: Pipeline Orchestrator
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      run_release:
+        description: "Run release stage"
+        required: false
+        type: boolean
+        default: false
+      release_tag:
+        description: "Release tag (required if run_release=true and not tag push)"
+        required: false
+        type: string
+      run_deploy:
+        description: "Run deploy stage"
+        required: false
+        type: boolean
+        default: true
+      deploy_environment:
+        description: "Deploy environment"
+        required: false
+        type: choice
+        default: dev
+        options: [ dev, prod ]
+      deploy_path:
+        description: "Optional deploy path override (dev)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orchestrator-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci_fullstack:
+    name: Fullstack CI
+    uses: ./.github/workflows/ci_fullstack.yml
+    secrets: inherit
+
+  e2e:
+    name: E2E
+    needs: ci_fullstack
+    uses: ./.github/workflows/e2e.yml
+    secrets: inherit
+
+  release:
+    name: Release
+    needs: [ci_fullstack, e2e]
+    if: >
+      (github.event_name == 'workflow_dispatch' && inputs.run_release == true) ||
+      startsWith(github.ref, 'refs/tags/v')
+    uses: ./.github/workflows/release.yml
+    with:
+      release-tag: ${{ inputs.release_tag != '' && inputs.release_tag || github.ref_name }}
+    secrets: inherit
+
+  deploy:
+    name: Deploy
+    needs: [ci_fullstack, e2e]
+    if: >
+      (github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.run_deploy == true)
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_environment || (github.ref_name == 'main' && 'prod' || 'dev') }}
+      deploy_path: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_path || '' }}
+    secrets: inherit

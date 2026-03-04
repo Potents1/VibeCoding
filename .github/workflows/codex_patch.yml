@@ -1,0 +1,129 @@
+name: Codex Patch
+
+on:
+  pull_request_target:
+    types: [ opened, synchronize, reopened, labeled ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  gate:
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.mode.outputs.mode }}
+      allowed: ${{ steps.policy.outputs.allowed }}
+      pr_branch: ${{ steps.mode.outputs.pr_branch }}
+      pr_repo: ${{ steps.mode.outputs.pr_repo }}
+      is_fork: ${{ steps.mode.outputs.is_fork }}
+      py_files: ${{ steps.policy.outputs.py_files }}
+    steps:
+      - name: Determine mode from labels
+        id: mode
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = (pr?.labels || []).map(l => String(l.name || "").toLowerCase());
+            let mode = "off";
+            if (labels.includes("codex:review")) mode = "review";
+            if (labels.includes("codex:patch")) mode = "patch";
+            core.setOutput("mode", mode);
+            core.setOutput("pr_branch", pr?.head?.ref || "");
+            core.setOutput("pr_repo", pr?.head?.repo?.full_name || "");
+            core.setOutput("is_fork", String(Boolean(pr?.head?.repo?.fork)));
+
+      - name: Enforce directory policy
+        id: policy
+        if: steps.mode.outputs.mode != 'off'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const pr = context.payload.pull_request;
+            const policy = JSON.parse(fs.readFileSync(".github/codex-policy.json", "utf8"));
+            const allowedDirs = (policy.allowed_patch_dirs || []).map(s => String(s));
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              per_page: 100
+            });
+            const changed = files.map(f => String(f.filename || ""));
+            const outside = changed.filter(f => !allowedDirs.some(prefix => f.startsWith(prefix)));
+            const pyFiles = changed.filter(f => f.endsWith(".py")).join("\n");
+            core.setOutput("py_files", pyFiles);
+            core.setOutput("allowed", outside.length === 0 ? "true" : "false");
+            if (outside.length > 0) {
+              core.notice(`Files outside allowed directories: ${outside.join(", ")}`);
+            }
+
+  review:
+    runs-on: ubuntu-latest
+    needs: gate
+    if: needs.gate.outputs.mode == 'review'
+    steps:
+      - name: Post review-only comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: "Codex review-only mode is active (`codex:review`). No write operations were performed."
+            });
+
+  patch:
+    runs-on: ubuntu-latest
+    needs: gate
+    if: needs.gate.outputs.mode == 'patch' && needs.gate.outputs.allowed == 'true'
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ needs.gate.outputs.pr_repo }}
+          ref: ${{ needs.gate.outputs.pr_branch }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply scoped auto-format patch
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+          if [ -n "${{ needs.gate.outputs.py_files }}" ]; then
+            echo "${{ needs.gate.outputs.py_files }}" | tr '\n' '\0' | xargs -0 -r ruff format
+          else
+            echo "No changed python files to format."
+          fi
+
+      - name: Commit and push patch
+        if: needs.gate.outputs.is_fork != 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "codex patch: scoped auto-format"
+          git push origin HEAD:${{ needs.gate.outputs.pr_branch }}
+
+      - name: Comment when fork prevents push
+        if: needs.gate.outputs.is_fork == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: "Codex patch mode ran, but this PR is from a fork. Push was skipped for safety."
+            });

@@ -1,0 +1,20 @@
+name: run-frontend-checks
+description: Run lint/test/build for frontend projects when scripts are available.
+inputs:
+  working-directory:
+    description: Frontend directory
+    required: false
+    default: "agent-dashboard"
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ ! -f package.json ]; then
+          echo "No frontend package.json found in $PWD; skipping."
+          exit 0
+        fi
+        npm run lint --if-present
+        npm run test --if-present -- --watchAll=false
+        npm run build --if-present

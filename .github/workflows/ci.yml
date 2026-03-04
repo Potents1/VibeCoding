@@ -1,0 +1,148 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - ".vscode/**"
+      - "run_artifacts/**"
+  pull_request:
+    branches: [ main, develop ]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - ".vscode/**"
+      - "run_artifacts/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test on Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12']
+      fail-fast: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+
+    - name: Create necessary directories
+      run: |
+        mkdir -p data logs
+
+    - name: Run linting with ruff
+      run: |
+        ruff check agentsystem app main.py --select F,E9 --output-format=github
+
+    - name: Run type checking with mypy
+      run: |
+        mypy . --no-error-summary
+      continue-on-error: true
+
+    - name: Run tests with pytest
+      env:
+        TEST_MODE: true
+        FLASK_ENV: testing
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || 'sk-test-key' }}
+        HF_TOKEN: ${{ secrets.HF_TOKEN || 'hf_test_token' }}
+        REDDIT_CLIENT_ID: test_client_id
+        REDDIT_CLIENT_SECRET: test_client_secret
+        NEWSAPI_KEY: test_newsapi_key
+        FLASK_SECRET_KEY: test_secret_key_for_ci
+      run: |
+        pytest tests/ -v --cov=agentsystem --cov=app --cov-report=xml --cov-report=term
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+    - name: Archive test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ matrix.python-version }}
+        path: |
+          htmlcov/
+          logs/
+          coverage.xml
+
+  lint:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ruff black isort mypy
+
+    - name: Check code formatting with black
+      run: |
+        black --check .
+      continue-on-error: true
+
+    - name: Check import sorting with isort
+      run: |
+        isort --check-only .
+      continue-on-error: true
+
+    - name: Lint with ruff
+      run: |
+        ruff check agentsystem app main.py --select F,E9
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'trivy-results.sarif'

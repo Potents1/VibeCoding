@@ -1,0 +1,73 @@
+name: Fullstack CI
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: false
+        type: string
+        default: "3.12"
+      node-version:
+        required: false
+        type: string
+        default: "20"
+      run-integration:
+        required: false
+        type: boolean
+        default: true
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fullstack-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-python-deps
+        with:
+          python-version: ${{ inputs.python-version || '3.12' }}
+      - uses: ./.github/actions/run-backend-checks
+        with:
+          test-path: tests
+
+  frontend:
+    name: Frontend checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-deps
+        with:
+          node-version: ${{ inputs.node-version || '20' }}
+          working-directory: agent-dashboard
+      - uses: ./.github/actions/run-frontend-checks
+        with:
+          working-directory: agent-dashboard
+
+  integration:
+    name: Integration checks
+    if: ${{ inputs.run-integration != false }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-python-deps
+        with:
+          python-version: ${{ inputs.python-version || '3.12' }}
+      - name: Run integration tests if present
+        shell: bash
+        run: |
+          if compgen -G "tests/*integration*.py" > /dev/null; then
+            pytest -q tests/*integration*.py
+          else
+            echo "No integration tests found; skipping."
+          fi
