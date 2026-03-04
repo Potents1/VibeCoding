@@ -1,0 +1,55 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to rollback"
+        required: true
+        default: "dev"
+        type: choice
+        options: [ dev ]
+      deploy_path:
+        description: "Optional override deploy path"
+        required: false
+      health_url:
+        description: "Optional health URL after rollback"
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rollback-${{ github.event.inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  rollback-dev:
+    name: Rollback dev deployment
+    if: github.event.inputs.environment == 'dev'
+    runs-on: [ self-hosted, windows ]
+    environment: dev
+    timeout-minutes: 20
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Perform rollback
+        shell: powershell
+        env:
+          AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
+        run: |
+          $deployPath = "${{ github.event.inputs.deploy_path }}"
+          if (-not $deployPath) { $deployPath = $env:AGI_DEV_DEPLOY_PATH }
+          if (-not $deployPath) { $deployPath = "C:\Users\peter\source\repos\AGI-dev" }
+          ./scripts/cicd/rollback_dev.ps1 -DeployRoot $deployPath
+
+      - name: Health check after rollback
+        shell: powershell
+        env:
+          AGI_DEV_HEALTH_URL: ${{ vars.AGI_DEV_HEALTH_URL }}
+        run: |
+          $url = "${{ github.event.inputs.health_url }}"
+          if (-not $url) { $url = $env:AGI_DEV_HEALTH_URL }
+          if (-not $url) { $url = "http://127.0.0.1:5000/health" }
+          ./scripts/cicd/health_check.ps1 -Url $url -Attempts 12 -DelaySeconds 5

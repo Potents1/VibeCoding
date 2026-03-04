@@ -1,0 +1,171 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [ "Build Package" ]
+    types: [ completed ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deployment environment"
+        required: true
+        default: "dev"
+        type: choice
+        options: [ dev, staging, prod ]
+      deploy_path:
+        description: "Optional override deploy path"
+        required: false
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+concurrency:
+  group: deploy-${{ github.ref_name }}-${{ github.event.inputs.environment || 'auto' }}
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    name: Resolve target environment
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.out.outputs.should_deploy }}
+      target_env: ${{ steps.out.outputs.target_env }}
+      release_id: ${{ steps.out.outputs.release_id }}
+    steps:
+      - id: out
+        shell: bash
+        run: |
+          should_deploy="false"
+          target_env="dev"
+          release_id="$(date +%Y%m%d%H%M%S)-${GITHUB_SHA::8}"
+
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            if [ "${{ github.event.workflow_run.conclusion }}" != "success" ]; then
+              echo "should_deploy=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            branch="${{ github.event.workflow_run.head_branch }}"
+            if [ "$branch" = "develop" ]; then
+              target_env="dev"
+              should_deploy="true"
+            elif [ "$branch" = "main" ]; then
+              target_env="prod"
+              should_deploy="true"
+            fi
+            release_id="$(date +%Y%m%d%H%M%S)-${{ github.event.workflow_run.head_sha }}"
+            release_id="${release_id:0:24}"
+          else
+            target_env="${{ github.event.inputs.environment }}"
+            should_deploy="true"
+          fi
+
+          echo "should_deploy=${should_deploy}" >> "$GITHUB_OUTPUT"
+          echo "target_env=${target_env}" >> "$GITHUB_OUTPUT"
+          echo "release_id=${release_id}" >> "$GITHUB_OUTPUT"
+
+  deploy-dev:
+    name: Deploy to local dev environment (self-hosted Windows)
+    needs: resolve
+    if: needs.resolve.outputs.should_deploy == 'true' && needs.resolve.outputs.target_env == 'dev'
+    runs-on: [ self-hosted, windows ]
+    environment: dev
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifact from triggering run
+        if: github.event_name == 'workflow_run'
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: build.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          path: artifact
+          if_no_artifact_found: fail
+
+      - name: Build artifact locally for manual dispatch
+        if: github.event_name == 'workflow_dispatch'
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path artifact | Out-Null
+          $releaseId = "${{ needs.resolve.outputs.release_id }}"
+          $zipName = "agi-package-$releaseId.zip"
+          $staging = Join-Path $PWD "artifact\package"
+          if (Test-Path $staging) { Remove-Item -Recurse -Force $staging }
+          New-Item -ItemType Directory -Force -Path $staging | Out-Null
+          robocopy $PWD $staging /E /XD .git .github venv __pycache__ .pytest_cache .ruff_cache agent-dashboard\node_modules /XF *.pyc | Out-Null
+          if ($LASTEXITCODE -gt 7) { throw "Robocopy failed with code $LASTEXITCODE" }
+          Compress-Archive -Path "$staging\*" -DestinationPath (Join-Path $PWD "artifact\$zipName") -Force
+
+      - name: Locate artifact zip
+        id: zip
+        shell: powershell
+        run: |
+          $zip = Get-ChildItem -Path artifact -Recurse -Filter *.zip | Select-Object -First 1
+          if (-not $zip) { throw "No artifact zip found under artifact/" }
+          "zip_path=$($zip.FullName)" >> $env:GITHUB_OUTPUT
+
+      - name: Deploy to local dev folder
+        shell: powershell
+        env:
+          AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
+        run: |
+          $deployPath = "${{ github.event.inputs.deploy_path }}"
+          if (-not $deployPath) { $deployPath = $env:AGI_DEV_DEPLOY_PATH }
+          if (-not $deployPath) { $deployPath = "C:\Users\peter\source\repos\AGI-dev" }
+          ./scripts/cicd/deploy_dev.ps1 `
+            -ArtifactZip "${{ steps.zip.outputs.zip_path }}" `
+            -DeployRoot $deployPath `
+            -ReleaseId "${{ needs.resolve.outputs.release_id }}"
+
+      - name: Health check
+        shell: powershell
+        env:
+          AGI_DEV_HEALTH_URL: ${{ vars.AGI_DEV_HEALTH_URL }}
+        run: |
+          $url = $env:AGI_DEV_HEALTH_URL
+          if (-not $url) { $url = "http://127.0.0.1:5000/health" }
+          ./scripts/cicd/health_check.ps1 -Url $url -Attempts 12 -DelaySeconds 5
+
+      - name: Upload deployment logs and manifests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-dev-${{ needs.resolve.outputs.release_id }}
+          path: |
+            run_artifacts/**
+            scripts/cicd/**
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Deployment summary
+        shell: powershell
+        env:
+          AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
+        run: |
+          $deployPath = "${{ github.event.inputs.deploy_path }}"
+          if (-not $deployPath) { $deployPath = $env:AGI_DEV_DEPLOY_PATH }
+          if (-not $deployPath) { $deployPath = "C:\Users\peter\source\repos\AGI-dev" }
+          @"
+          ## Deployment Summary
+
+          - Environment: dev
+          - Release: ${{ needs.resolve.outputs.release_id }}
+          - Source: ${{ github.event_name }}
+          - Runner: self-hosted windows (this PC)
+          - Deploy path: $deployPath
+          "@ | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+
+  deploy-prod-placeholder:
+    name: Production deployment gate
+    needs: resolve
+    if: needs.resolve.outputs.should_deploy == 'true' && needs.resolve.outputs.target_env == 'prod'
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Production deploy placeholder
+        run: |
+          echo "Prod deployment is environment-gated and requires provider-specific OIDC/deploy steps."
+          echo "Configure this job with your cloud target when ready."
