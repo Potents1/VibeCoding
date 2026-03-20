@@ -1,17 +1,19 @@
-# CLI Calculator
+# Text Stats
 
-A tiny reference project that evaluates one binary arithmetic expression passed on the command line.
+TextStats is a zero-dependency Python utility that reports basic statistics for an input text file or stdin stream.
 
-## Usage
-Install the package in editable mode or run with Python directly:
+## Quick start
 
+```bash
+python -m venv .venv
+. .venv/bin/activate
+pip install --upgrade pip
+pip install -e .[dev]
+python main.py README.md --pretty
 ```
-python -m src.calculator "2 + 2"
-# or once installed via entry point
-calc "10 / 4" --precision 6
-```
 
-## Testing
-```
+## Running tests
+
+```bash
 pytest
 ```
