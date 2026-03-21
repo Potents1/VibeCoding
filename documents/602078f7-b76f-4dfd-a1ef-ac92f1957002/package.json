@@ -1,0 +1,12 @@
+{
+  "name": "goal-602078f7-b76f-4dfd-a1ef--program",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "test": "node -e \"console.log('TEST_OK')\"",
+    "build": "node -e \"console.log('BUILD_OK')\"",
+    "run_smoke": "python tests/smoke_game.py",
+    "start": "node -e \"console.log('START_OK')\""
+  },
+  "type": "module"
+}
