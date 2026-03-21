@@ -1,0 +1,91 @@
+:root {
+    color-scheme: dark;
+    --bg: #050712;
+    --panel: #101528;
+    --border: #202844;
+    --accent: #ffeb3b;
+    --text: #f0f4ff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: radial-gradient(circle at top, #151835, var(--bg));
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.game-shell {
+    background: rgba(16, 21, 40, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 32px;
+    width: min(520px, 100%);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    margin: 0 0 12px;
+    text-transform: uppercase;
+}
+
+#hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+#hud strong {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #03021d;
+    margin: 0 auto 12px;
+}
+
+.hint {
+    font-size: 0.9rem;
+    color: #c5c9f5;
+    margin: 8px 0 0;
+}
+
+#restartButton {
+    margin-top: 12px;
+    background: var(--accent);
+    border: none;
+    color: #212121;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 150ms ease;
+}
+
+#restartButton:hover {
+    transform: translateY(-1px);
+}
+
+#restartButton:active {
+    transform: translateY(0);
+}
