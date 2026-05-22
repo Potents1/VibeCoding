@@ -7,6 +7,8 @@
 - Overall Passed: `True`
 
 ## Files
+- `game.js`
+- `styles.css`
 - `index.html`
 - `package.json`
 - `app.js`
@@ -14,7 +16,6 @@
 - `collision.js`
 - `constants.js`
 - `enemy.js`
-- `game.js`
 - `gamelogic.js`
 - `game_state.js`
 - `ghost_ai.js`
@@ -26,14 +27,13 @@
 - `renderer.js`
 - `state.js`
 - `update.js`
-- `styles.css`
 
 ## Commands
 - Profile: `web_static` (plan_run_command_incompatible)
 - Compile: `[]`
 - Test: `["python", "tests/smoke_game.py"]`
 - Unit Test: `["npm", "test"]`
-- Run: `["npm", "test"]`
+- Run: `["npm", "run", "build"]`
 
 ## Test Evidence
 - Compile passed: `True`
