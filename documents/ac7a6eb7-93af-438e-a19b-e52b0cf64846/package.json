@@ -1,12 +1,22 @@
 {
-  "name": "goal-ac7a6eb7-93af-438e-a19b--program",
-  "private": true,
-  "version": "0.0.1",
+  "name": "browser-chess-game",
+  "version": "1.0.0",
+  "description": "A small browser maze game",
   "type": "module",
+  "main": "src/main.js",
   "scripts": {
-    "start": "node -e \"console.log('START_OK')\"",
-    "build": "node -e \"console.log('BUILD_OK')\"",
-    "test": "node -e \"console.log('TEST_OK')\"",
-    "run_smoke": "python tests/smoke_game.py"
-  }
+    "start": "serve .",
+    "test": "node tests/run.js"
+  },
+  "keywords": [
+    "game",
+    "browser",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.1.2"
+  },
+  "dependencies": {}
 }
