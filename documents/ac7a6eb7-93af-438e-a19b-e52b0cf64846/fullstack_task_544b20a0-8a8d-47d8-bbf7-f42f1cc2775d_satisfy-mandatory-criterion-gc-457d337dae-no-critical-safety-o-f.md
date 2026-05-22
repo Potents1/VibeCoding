@@ -7,18 +7,14 @@
 - Overall Passed: `True`
 
 ## Files
-- `enemy.js`
-- `headers.js`
-- `game.js`
 - `index.html`
 - `package.json`
-- `security_dom_safety.test.js`
-- `playwright.config.js`
-- `game.e2e.test.js`
 - `app.js`
 - `chess.js`
 - `collision.js`
 - `constants.js`
+- `enemy.js`
+- `game.js`
 - `gamelogic.js`
 - `game_state.js`
 - `ghost_ai.js`
@@ -31,6 +27,7 @@
 - `state.js`
 - `update.js`
 - `csp.js`
+- `headers.js`
 - `styles.css`
 
 ## Commands
