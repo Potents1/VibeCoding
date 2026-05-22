@@ -15,8 +15,7 @@ export const COLORS = {
 };
 
 export const GAME = {
-  fixedDtMs: 1000 / 60,
+  fixedDtMs: 1000 / 30,
   playerSpeedTilesPerSec: 6,
   enemySpeedTilesPerSec: 4
 };
-

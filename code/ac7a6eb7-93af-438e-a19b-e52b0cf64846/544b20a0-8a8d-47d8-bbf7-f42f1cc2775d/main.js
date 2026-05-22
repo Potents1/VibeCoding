@@ -1,5 +1,5 @@
 import { newGame, stepGame } from "./logic.js";
-import { attachInput, createInput } from "./input.js";
+import { attachInput, createInput, movementIntent } from "./input.js";
 import { render } from "./render.js";
 
 const canvas = document.getElementById("game");
@@ -21,7 +21,7 @@ attachInput(input, window, { onRestart: restart });
 
 let lastTime = performance.now();
 let accMs = 0;
-const fixedStepMs = 100; // 10 ticks/s deterministic update
+const fixedStepMs = 1000 / 30; // deterministic update
 
 function frame(now) {
   const dt = Math.min(50, now - lastTime);
@@ -29,7 +29,7 @@ function frame(now) {
   accMs += dt;
 
   while (accMs >= fixedStepMs) {
-    stepGame(game, input.intent);
+    stepGame(game, movementIntent(input));
     accMs -= fixedStepMs;
   }
 
