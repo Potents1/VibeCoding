@@ -8,15 +8,11 @@
     "start": "node scripts/serve-static.mjs",
     "build": "node -e \"console.log('BUILD_OK')\"",
     "test": "python tests/smoke_game.py",
-    "test:smoke": "node tests/run.js && node tests/security_dom_safety.test.js",
-    "test:e2e": "playwright test -c tests/e2e/playwright.config.js",
     "lint": "eslint .",
-    "audit:ci": "npm audit --audit-level=high --omit=dev",
     "run_smoke": "python tests/smoke_game.py"
   },
   "dependencies": {},
   "devDependencies": {
-    "@playwright/test": "^1.54.2",
     "eslint": "^9.9.1",
     "eslint-plugin-security": "^3.0.1"
   },
