@@ -20,6 +20,7 @@ export function attachInput(input, target, { onRestart } = {}) {
   const onKeyDown = (e) => {
     if (e.key === "r" || e.key === "R") {
       onRestart?.();
+      e.preventDefault();
       return;
     }
     const dir = KEY_TO_DIR.get(e.key);
@@ -44,4 +45,19 @@ export function attachInput(input, target, { onRestart } = {}) {
     target.removeEventListener("keydown", onKeyDown);
     target.removeEventListener("keyup", onKeyUp);
   };
+}
+
+export function movementIntent(input) {
+  let x = 0;
+  let y = 0;
+  if (input?.held?.has("ArrowLeft") || input?.held?.has("a")) x -= 1;
+  if (input?.held?.has("ArrowRight") || input?.held?.has("d")) x += 1;
+  if (input?.held?.has("ArrowUp") || input?.held?.has("w")) y -= 1;
+  if (input?.held?.has("ArrowDown") || input?.held?.has("s")) y += 1;
+  if (x !== 0 && y !== 0) {
+    const inv = 1 / Math.SQRT2;
+    x *= inv;
+    y *= inv;
+  }
+  return { x, y };
 }
