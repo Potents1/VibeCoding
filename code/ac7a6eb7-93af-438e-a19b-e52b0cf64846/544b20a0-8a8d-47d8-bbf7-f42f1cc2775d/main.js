@@ -1,55 +1,41 @@
-import { GAME, TILE, WORLD } from "./constants.js";
-import { createGameState, resetGameState } from "./state.js";
-import { createInput, inputFromKeyEvent } from "./input.js";
-import { stepGame } from "./update.js";
+import { newGame, stepGame } from "./logic.js";
+import { attachInput, createInput } from "./input.js";
 import { render } from "./render.js";
 
 const canvas = document.getElementById("game");
 const statusEl = document.getElementById("status");
+const restartBtn = document.getElementById("restart");
+/** @type {CanvasRenderingContext2D} */
 const ctx = canvas.getContext("2d");
 
-canvas.width = WORLD.cols * TILE;
-canvas.height = WORLD.rows * TILE;
-
-const state = createGameState();
+const ui = { status: statusEl };
 const input = createInput();
+let game = newGame();
 
-function updateStatus() {
-  if (!statusEl) return;
-  if (state.outcome === "playing") statusEl.textContent = "";
-  if (state.outcome === "won") statusEl.textContent = "You win! Press R to reset.";
-  if (state.outcome === "lost") statusEl.textContent = "You lose! Press R to reset.";
+function restart() {
+  game = newGame();
 }
 
-window.addEventListener("keydown", (ev) => {
-  inputFromKeyEvent(input, ev, true);
-  if (input.reset) {
-    resetGameState(state);
-    input.reset = false;
-  }
-});
+restartBtn.addEventListener("click", restart);
+attachInput(input, window, { onRestart: restart });
 
-window.addEventListener("keyup", (ev) => {
-  inputFromKeyEvent(input, ev, false);
-});
-
-let last = performance.now();
-let acc = 0;
+let lastTime = performance.now();
+let accMs = 0;
+const fixedStepMs = 100; // 10 ticks/s deterministic update
 
 function frame(now) {
-  const delta = now - last;
-  last = now;
-  acc += Math.min(250, delta);
+  const dt = Math.min(50, now - lastTime);
+  lastTime = now;
+  accMs += dt;
 
-  while (acc >= GAME.fixedDtMs) {
-    stepGame(state, input, GAME.fixedDtMs);
-    acc -= GAME.fixedDtMs;
+  while (accMs >= fixedStepMs) {
+    stepGame(game, input.intent);
+    accMs -= fixedStepMs;
   }
 
-  render(ctx, state);
-  updateStatus();
+  render(ctx, game, ui);
   requestAnimationFrame(frame);
 }
 
+render(ctx, game, ui);
 requestAnimationFrame(frame);
-

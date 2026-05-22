@@ -1,23 +1,22 @@
 {
-  "name": "maze-chase",
+  "name": "browser-chess-game",
   "version": "1.0.0",
-  "description": "A small browser-based maze chase game",
+  "private": true,
   "type": "module",
-  "main": "src/main.js",
   "scripts": {
+    "test": "python tests/smoke_game.py",
     "start": "node scripts/serve-static.mjs",
-    "test": "node tests/run.js",
     "build": "node -e \"console.log('BUILD_OK')\"",
     "run_smoke": "python tests/smoke_game.py"
   },
+  "main": "src/game.js",
+  "description": "A browser-based chess game",
   "keywords": [
     "game",
     "browser",
-    "javascript"
+    "javascript",
+    "chess"
   ],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {},
   "dependencies": {},
-  "private": true
+  "devDependencies": {}
 }

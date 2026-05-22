@@ -7,8 +7,6 @@
 - Overall Passed: `True`
 
 ## Files
-- `game.js`
-- `styles.css`
 - `index.html`
 - `package.json`
 - `app.js`
@@ -16,17 +14,21 @@
 - `collision.js`
 - `constants.js`
 - `enemy.js`
+- `game.js`
 - `gamelogic.js`
 - `game_state.js`
 - `ghost_ai.js`
 - `input.js`
 - `level.js`
+- `logic.js`
 - `main.js`
 - `math.js`
 - `render.js`
 - `renderer.js`
 - `state.js`
 - `update.js`
+- `csp.js`
+- `styles.css`
 
 ## Commands
 - Profile: `web_static` (plan_run_command_incompatible)

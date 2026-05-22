@@ -1,35 +1,47 @@
 export function createInput() {
   return {
-    left: false,
-    right: false,
-    up: false,
-    down: false,
-    reset: false
+    held: new Set(),
+    intent: { x: 0, y: 0 }
   };
 }
 
-export function inputFromKeyEvent(input, ev, isDown) {
-  const key = ev.key;
-  if (key === "ArrowLeft" || key === "a" || key === "A") input.left = isDown;
-  if (key === "ArrowRight" || key === "d" || key === "D") input.right = isDown;
-  if (key === "ArrowUp" || key === "w" || key === "W") input.up = isDown;
-  if (key === "ArrowDown" || key === "s" || key === "S") input.down = isDown;
-  if (key === "r" || key === "R") input.reset = isDown;
-}
+const KEY_TO_DIR = new Map([
+  ["ArrowLeft", { x: -1, y: 0 }],
+  ["ArrowRight", { x: 1, y: 0 }],
+  ["ArrowUp", { x: 0, y: -1 }],
+  ["ArrowDown", { x: 0, y: 1 }],
+  ["a", { x: -1, y: 0 }],
+  ["d", { x: 1, y: 0 }],
+  ["w", { x: 0, y: -1 }],
+  ["s", { x: 0, y: 1 }]
+]);
 
-export function movementIntent(input) {
-  let dx = 0;
-  let dy = 0;
-  if (input.left) dx -= 1;
-  if (input.right) dx += 1;
-  if (input.up) dy -= 1;
-  if (input.down) dy += 1;
-  if (dx !== 0 && dy !== 0) {
-    // Keep diagonals from being faster: normalize to 0.7071...
-    const inv = 1 / Math.sqrt(2);
-    dx *= inv;
-    dy *= inv;
-  }
-  return { x: dx, y: dy };
-}
+export function attachInput(input, target, { onRestart } = {}) {
+  const onKeyDown = (e) => {
+    if (e.key === "r" || e.key === "R") {
+      onRestart?.();
+      return;
+    }
+    const dir = KEY_TO_DIR.get(e.key);
+    if (!dir) return;
+    input.held.add(e.key);
+    input.intent = dir;
+    e.preventDefault();
+  };
 
+  const onKeyUp = (e) => {
+    const dir = KEY_TO_DIR.get(e.key);
+    if (!dir) return;
+    input.held.delete(e.key);
+    if (input.held.size === 0) input.intent = { x: 0, y: 0 };
+    e.preventDefault();
+  };
+
+  target.addEventListener("keydown", onKeyDown);
+  target.addEventListener("keyup", onKeyUp);
+
+  return () => {
+    target.removeEventListener("keydown", onKeyDown);
+    target.removeEventListener("keyup", onKeyUp);
+  };
+}
