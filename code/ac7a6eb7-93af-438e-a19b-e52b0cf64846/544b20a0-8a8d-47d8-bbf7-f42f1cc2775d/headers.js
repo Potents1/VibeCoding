@@ -15,5 +15,5 @@ export function applyRuntimeHardening() {
   };
 
   ensureMeta('referrer', 'no-referrer');
-  ensureMeta('color-scheme', 'light dark');
+  ensureMeta('color-scheme', 'light');
 }

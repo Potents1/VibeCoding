@@ -9,12 +9,18 @@
 ## Files
 - `index.html`
 - `package.json`
+- `game.js`
+- `engine.js`
+- `csp.js`
+- `headers.js`
+- `styles.css`
+- `run.js`
 - `app.js`
 - `chess.js`
 - `collision.js`
 - `constants.js`
 - `enemy.js`
-- `game.js`
+- `eslint.config.js`
 - `gamelogic.js`
 - `game_state.js`
 - `ghost_ai.js`
@@ -26,9 +32,6 @@
 - `renderer.js`
 - `state.js`
 - `update.js`
-- `csp.js`
-- `headers.js`
-- `styles.css`
 
 ## Commands
 - Profile: `web_static` (plan_run_command_incompatible)

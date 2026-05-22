@@ -18,10 +18,6 @@ function el(tag, attrs = {}) {
   return n;
 }
 
-function safeSetText(node, text) {
-  node.textContent = text;
-}
-
 function computeBoardSize() {
   const max = Math.min(window.innerWidth, window.innerHeight) - 80;
   return Math.max(320, Math.min(640, max));
@@ -91,13 +87,13 @@ function squareFromEvent(app, ev) {
 function updateStatus(app) {
   const o = getGameOutcome(app.state.pos);
   if (!o.over) {
-    safeSetText(app.statusEl, app.state.pos.turn === 'w' ? 'White to move' : 'Black to move');
+    app.statusEl.textContent = app.state.pos.turn === 'w' ? 'White to move' : 'Black to move';
   } else if (o.result === 'white_wins') {
-    safeSetText(app.statusEl, 'Checkmate — White wins');
+    app.statusEl.textContent = 'Checkmate — White wins';
   } else if (o.result === 'black_wins') {
-    safeSetText(app.statusEl, 'Checkmate — Black wins');
+    app.statusEl.textContent = 'Checkmate — Black wins';
   } else {
-    safeSetText(app.statusEl, 'Draw');
+    app.statusEl.textContent = 'Draw';
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "browser-chess-game",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "description": "A browser-based chess game",
@@ -8,8 +8,7 @@
     "start": "node scripts/serve-static.mjs",
     "build": "node -e \"console.log('BUILD_OK')\"",
     "test": "python tests/smoke_game.py",
-    "test:smoke": "python tests/smoke_game.py",
-    "test:unit": "node tests/run.js",
+    "test:smoke": "node tests/run.js && node tests/security_dom_safety.test.js",
     "test:e2e": "playwright test -c tests/e2e/playwright.config.js",
     "lint": "eslint .",
     "audit:ci": "npm audit --audit-level=high --omit=dev",
