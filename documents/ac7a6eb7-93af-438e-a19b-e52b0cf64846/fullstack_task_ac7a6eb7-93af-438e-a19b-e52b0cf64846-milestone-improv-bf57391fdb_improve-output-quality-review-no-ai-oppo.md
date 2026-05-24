@@ -1,0 +1,46 @@
+# Fullstack Execution Report
+
+## Summary
+- Goal ID: `ac7a6eb7-93af-438e-a19b-e52b0cf64846`
+- Task ID: `ac7a6eb7-93af-438e-a19b-e52b0cf64846:milestone:improve-output:task:quality-review`
+- Task: Improve output: Quality Review; No ai opponent and behaviour when in check could be improved around warnings and available moves
+- Overall Passed: `True`
+
+## Files
+- `index.html`
+- `package.json`
+- `ai.js`
+- `engine.js`
+- `game.js`
+- `input.js`
+- `board.js`
+- `fen.js`
+- `index.js`
+- `movegen.js`
+- `perft.js`
+- `validate.js`
+- `csp.js`
+- `headers.js`
+- `styles.css`
+
+## Commands
+- Profile: `web_static` (plan_run_command_incompatible)
+- Compile: `[]`
+- Test: `["python", "tests/smoke_game.py"]`
+- Unit Test: `["python", "tests/smoke_game.py"]`
+- Run: `["npm", "run", "build"]`
+
+## Test Evidence
+- Compile passed: `True`
+- Smoke test passed: `True`
+- Test passed: `True`
+- Run passed: `True`
+- Smoke stderr: ``
+- Test stderr: ``
+- Run stderr: ``
+
+## Next Fixes
+- None required
+
+## JSON Sidecar
+- `D:\agi-runtime\run_artifacts\ac7a6eb7-93af-438e-a19b-e52b0cf64846\documents\fullstack_task_ac7a6eb7-93af-438e-a19b-e52b0cf64846-milestone-improv-bf57391fdb_improve-output-quality-review-no-ai-oppo.json`
