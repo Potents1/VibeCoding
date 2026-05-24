@@ -9,6 +9,7 @@ export function generateLegalMoves(pos) {
 }
 
 export function applyMove(pos, move) {
+  // keep strict acceptance behavior: only allow moves present in legal list
   const legal = generateLegalMovesCore(pos);
   if (!legal.some((m) => m.from === move.from && m.to === move.to)) return null;
   return applyMoveCore(pos, move);

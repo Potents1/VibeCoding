@@ -3,13 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chess</title>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests" />
-  <meta name="referrer" content="no-referrer" />
+  <title>Browser Chess Game</title>
   <link rel="stylesheet" href="src/styles.css" />
 </head>
 <body>
-  <main id="app"></main>
+  <main id="game-container">
+    <h1>Browser Chess Game</h1>
+    <div id="board"></div>
+    <canvas id="game-canvas" width="640" height="720"></canvas>
+    <div id="status" aria-live="polite" role="status"></div>
+    <button id="restart-btn" type="button">Restart</button>
+  </main>
   <script type="module" src="src/game.js"></script>
 </body>
 </html>

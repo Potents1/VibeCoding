@@ -1,100 +1,24 @@
-export function createInput() {
-  return {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    restart: false
-  };
+import { algebraicToRC, rcToAlgebraic } from './engine.js';
+
+export function clamp(n, lo, hi) {
+  return Math.max(lo, Math.min(hi, n));
 }
 
-export function attachInput(input, target, { onRestart } = {}) {
-  const onKeyDown = (e) => {
-    switch (e.key) {
-      case "ArrowLeft":
-      case "a":
-      case "A":
-        input.left = true;
-        e.preventDefault();
-        break;
-      case "ArrowRight":
-      case "d":
-      case "D":
-        input.right = true;
-        e.preventDefault();
-        break;
-      case "ArrowUp":
-      case "w":
-      case "W":
-        input.up = true;
-        e.preventDefault();
-        break;
-      case "ArrowDown":
-      case "s":
-      case "S":
-        input.down = true;
-        e.preventDefault();
-        break;
-      case "r":
-      case "R":
-        input.restart = true;
-        onRestart?.();
-        e.preventDefault();
-        break;
-      default:
-        break;
-    }
-  };
+export function moveFocusSquare(current, key) {
+  const { r, c } = algebraicToRC(current);
+  let nr = r;
+  let nc = c;
+  if (key === 'ArrowUp') nr -= 1;
+  else if (key === 'ArrowDown') nr += 1;
+  else if (key === 'ArrowLeft') nc -= 1;
+  else if (key === 'ArrowRight') nc += 1;
+  else return current;
 
-  const onKeyUp = (e) => {
-    switch (e.key) {
-      case "ArrowLeft":
-      case "a":
-      case "A":
-        input.left = false;
-        e.preventDefault();
-        break;
-      case "ArrowRight":
-      case "d":
-      case "D":
-        input.right = false;
-        e.preventDefault();
-        break;
-      case "ArrowUp":
-      case "w":
-      case "W":
-        input.up = false;
-        e.preventDefault();
-        break;
-      case "ArrowDown":
-      case "s":
-      case "S":
-        input.down = false;
-        e.preventDefault();
-        break;
-      default:
-        break;
-    }
-  };
-
-  target.addEventListener("keydown", onKeyDown);
-  target.addEventListener("keyup", onKeyUp);
-
-  return () => {
-    target.removeEventListener("keydown", onKeyDown);
-    target.removeEventListener("keyup", onKeyUp);
-  };
+  nr = clamp(nr, 0, 7);
+  nc = clamp(nc, 0, 7);
+  return rcToAlgebraic(nr, nc);
 }
 
-export function movementIntent(input) {
-  let x = 0;
-  let y = 0;
-  if (input.left) x -= 1;
-  if (input.right) x += 1;
-  if (input.up) y -= 1;
-  if (input.down) y += 1;
-
-  // Avoid diagonals for deterministic, grid-based movement.
-  if (x !== 0 && y !== 0) y = 0;
-  return { x, y };
+export function isSelectKey(key) {
+  return key === 'Enter' || key === ' ' || key === 'Spacebar';
 }

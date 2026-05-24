@@ -7,36 +7,16 @@
 - Overall Passed: `True`
 
 ## Files
-- `dom.js`
-- `status.js`
-- `boardview.js`
-- `game.js`
-- `ui.smoke.test.js`
-- `run_node_tests.mjs`
-- `main.js`
-- `smoke_game.py`
-- `chess.e2e.test.js`
-- `package.json`
 - `index.html`
+- `package.json`
 - `ai.js`
-- `app.js`
-- `chess.js`
-- `collision.js`
-- `constants.js`
-- `enemy.js`
 - `engine.js`
-- `eslint.config.js`
-- `gamelogic.js`
-- `game_state.js`
-- `ghost_ai.js`
+- `game.js`
 - `input.js`
-- `logic.js`
-- `math.js`
-- `render.js`
-- `renderer.js`
-- `state.js`
-- `update.js`
+- `legacygamecompat.js`
+- `main.js`
 - `board.js`
+- `chessengine.js`
 - `fen.js`
 - `index.js`
 - `movegen.js`
@@ -44,13 +24,16 @@
 - `validate.js`
 - `csp.js`
 - `headers.js`
+- `boardview.js`
+- `inputcontroller.js`
+- `sanitize.js`
 - `styles.css`
 
 ## Commands
 - Profile: `web_static` (plan_run_command_incompatible)
 - Compile: `[]`
 - Test: `["python", "tests/smoke_game.py"]`
-- Unit Test: `["npm", "test"]`
+- Unit Test: `["python", "tests/smoke_game.py"]`
 - Run: `["npm", "run", "build"]`
 
 ## Test Evidence
