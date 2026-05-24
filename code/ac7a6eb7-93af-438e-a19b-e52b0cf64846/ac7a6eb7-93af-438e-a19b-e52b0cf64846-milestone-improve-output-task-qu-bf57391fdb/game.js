@@ -7,9 +7,9 @@ import {
   pieceToUnicode,
   algebraicToRC,
   rcToAlgebraic,
-  isInCheck
+  isInCheck,
+  findKing
 } from './engine.js';
-import { applyAiMove } from './ai.js';
 
 function el(tag, attrs = {}) {
   const n = document.createElement(tag);
@@ -23,6 +23,12 @@ function el(tag, attrs = {}) {
 function computeBoardSize() {
   const max = Math.min(window.innerWidth, window.innerHeight) - 80;
   return Math.max(320, Math.min(640, max));
+}
+
+function getCheckInfo(pos) {
+  const inCheck = isInCheck(pos.board, pos.turn);
+  const king = findKing(pos.board, pos.turn);
+  return { inCheck, king };
 }
 
 function render(app) {
@@ -46,6 +52,13 @@ function render(app) {
       ctx.fillStyle = light ? '#f0d9b5' : '#b58863';
       ctx.fillRect(c * sq, r * sq, sq, sq);
     }
+  }
+
+  // Check highlight (king square)
+  const { inCheck, king } = getCheckInfo(state.pos);
+  if (inCheck && king) {
+    ctx.fillStyle = 'rgba(231,76,60,0.35)';
+    ctx.fillRect(king.c * sq, king.r * sq, sq, sq);
   }
 
   if (state.selected) {
@@ -86,22 +99,32 @@ function squareFromEvent(app, ev) {
   return rcToAlgebraic(r, c);
 }
 
+function setMessage(app, msg) {
+  app.state.message = msg;
+}
+
 function updateStatus(app) {
   const o = getGameOutcome(app.state.pos);
+  const { inCheck } = getCheckInfo(app.state.pos);
+
   if (!o.over) {
     const turnLabel = app.state.pos.turn === 'w' ? 'White' : 'Black';
-    const checkSuffix = isInCheck(app.state.pos.board, app.state.pos.turn) ? ' - in check' : '';
-    if (app.state.mode === 'single' && app.state.pos.turn === 'b') {
-      app.statusEl.textContent = `AI opponent thinking${checkSuffix}`;
-    } else {
-      app.statusEl.textContent = `${turnLabel} to move${checkSuffix}`;
-    }
-  } else if (o.result === 'white_wins') {
-    app.statusEl.textContent = 'Checkmate — White wins';
+    const checkSuffix = inCheck ? '  In check' : '';
+    const msg = app.state.message ? `  ${app.state.message}` : '';
+    app.statusEl.textContent = `${turnLabel} to move${checkSuffix}${msg}`;
+    app.state.message = '';
+    return;
+  }
+
+  if (o.result === 'white_wins') {
+    app.statusEl.textContent = 'Checkmate  White wins';
   } else if (o.result === 'black_wins') {
-    app.statusEl.textContent = 'Checkmate — Black wins';
+    app.statusEl.textContent = 'Checkmate  Black wins';
   } else {
-    app.statusEl.textContent = 'Draw';
+    // if no legal moves but not in check => stalemate; otherwise generic draw
+    const legal = generateLegalMoves(app.state.pos);
+    if (legal.length === 0 && !inCheck) app.statusEl.textContent = 'Draw  Stalemate';
+    else app.statusEl.textContent = 'Draw';
   }
 }
 
@@ -109,33 +132,17 @@ function reset(app) {
   app.state.pos = createInitialPosition();
   app.state.selected = null;
   app.state.legalFromSelected = [];
-  app.state.aiPending = false;
+  app.state.message = '';
   updateStatus(app);
   render(app);
 }
 
-function maybeRunAiTurn(app) {
-  const outcome = getGameOutcome(app.state.pos);
-  if (app.state.mode !== 'single' || app.state.pos.turn !== 'b' || outcome.over || app.state.aiPending) return;
-
-  app.state.aiPending = true;
-  app.state.selected = null;
-  app.state.legalFromSelected = [];
-  updateStatus(app);
-  render(app);
-
-  window.setTimeout(() => {
-    const result = applyAiMove(app.state.pos);
-    app.state.pos = result.pos;
-    app.state.aiPending = false;
-    updateStatus(app);
-    render(app);
-  }, 250);
+function legalFrom(app, fromSq) {
+  const legal = generateLegalMoves(app.state.pos);
+  return legal.filter((m) => m.from === fromSq);
 }
 
 function onClick(app, ev) {
-  if (app.state.aiPending || (app.state.mode === 'single' && app.state.pos.turn === 'b')) return;
-
   const sq = squareFromEvent(app, ev);
   if (!sq) return;
 
@@ -147,22 +154,44 @@ function onClick(app, ev) {
 
   if (!app.state.selected) {
     if (piece && piece.c === app.state.pos.turn) {
+      const moves = legalFrom(app, sq);
+      if (moves.length === 0) {
+        setMessage(app, isInCheck(app.state.pos.board, app.state.pos.turn) ? 'Must respond to check' : 'No legal moves');
+        updateStatus(app);
+        render(app);
+        return;
+      }
       app.state.selected = sq;
-      app.state.legalFromSelected = generateLegalMoves(app.state.pos).filter((m) => m.from === sq);
+      app.state.legalFromSelected = moves;
+      render(app);
     }
-    render(app);
     return;
   }
 
   const candidate = app.state.legalFromSelected.find((m) => m.to === sq);
   if (candidate) {
     const next = applyMove(app.state.pos, candidate);
-    if (next) app.state.pos = next;
+    if (next) {
+      app.state.pos = next;
+    }
+    app.state.selected = null;
+    app.state.legalFromSelected = [];
+    updateStatus(app);
+    render(app);
+    return;
   }
 
+  // Not a legal destination: allow switching selection to another friendly piece
   if (piece && piece.c === app.state.pos.turn) {
-    app.state.selected = sq;
-    app.state.legalFromSelected = generateLegalMoves(app.state.pos).filter((m) => m.from === sq);
+    const moves = legalFrom(app, sq);
+    if (moves.length === 0) {
+      setMessage(app, isInCheck(app.state.pos.board, app.state.pos.turn) ? 'Must respond to check' : 'No legal moves');
+      app.state.selected = null;
+      app.state.legalFromSelected = [];
+    } else {
+      app.state.selected = sq;
+      app.state.legalFromSelected = moves;
+    }
   } else {
     app.state.selected = null;
     app.state.legalFromSelected = [];
@@ -170,7 +199,6 @@ function onClick(app, ev) {
 
   updateStatus(app);
   render(app);
-  maybeRunAiTurn(app);
 }
 
 function main() {
@@ -178,13 +206,12 @@ function main() {
 
   const root = document.getElementById('app');
   const title = el('h1', { text: 'Chess' });
-  const sub = el('p', { text: 'Click a piece to see legal moves. Click a highlighted square to move.' });
+  const sub = el('p', { text: 'Click a piece to see legal moves. If in check, only moves that resolve the check are allowed.' });
   const row = el('div', { class: 'row' });
   const left = el('div', { class: 'left' });
   const right = el('div', { class: 'right' });
   const status = el('div', { id: 'status', role: 'status', 'aria-live': 'polite' });
   const btn = el('button', { id: 'reset', type: 'button', text: 'New Game' });
-  const modeBtn = el('button', { id: 'mode', type: 'button', text: 'Mode: Human vs AI' });
   const note = el('p', { class: 'note', text: 'Rules: no castling, no en passant. Pawn promotes to queen automatically.' });
 
   const canvas = el('canvas', { id: 'board', width: '640', height: '640', 'aria-label': 'Chessboard' });
@@ -192,7 +219,6 @@ function main() {
 
   left.appendChild(canvas);
   right.appendChild(status);
-  right.appendChild(modeBtn);
   right.appendChild(btn);
   right.appendChild(note);
 
@@ -207,16 +233,10 @@ function main() {
     canvas,
     ctx,
     statusEl: status,
-    modeBtn,
-    state: { pos: createInitialPosition(), selected: null, legalFromSelected: [], mode: 'single', aiPending: false }
+    state: { pos: createInitialPosition(), selected: null, legalFromSelected: [], message: '' }
   };
 
   btn.addEventListener('click', () => reset(app));
-  modeBtn.addEventListener('click', () => {
-    app.state.mode = app.state.mode === 'single' ? 'local' : 'single';
-    app.modeBtn.textContent = app.state.mode === 'single' ? 'Mode: Human vs AI' : 'Mode: Two Player';
-    reset(app);
-  });
   canvas.addEventListener('click', (ev) => onClick(app, ev));
   window.addEventListener('resize', () => render(app), { passive: true });
 

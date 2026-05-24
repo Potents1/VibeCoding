@@ -7,11 +7,14 @@
 - Overall Passed: `True`
 
 ## Files
-- `index.html`
-- `package.json`
 - `ai.js`
-- `engine.js`
 - `game.js`
+- `check_rules.test.js`
+- `unit_smoke.mjs`
+- `package.json`
+- `check_rules.test.mjs`
+- `index.html`
+- `engine.js`
 - `input.js`
 - `board.js`
 - `fen.js`
@@ -27,7 +30,7 @@
 - Profile: `web_static` (plan_run_command_incompatible)
 - Compile: `[]`
 - Test: `["python", "tests/smoke_game.py"]`
-- Unit Test: `["python", "tests/smoke_game.py"]`
+- Unit Test: `["npm", "test"]`
 - Run: `["npm", "run", "build"]`
 
 ## Test Evidence

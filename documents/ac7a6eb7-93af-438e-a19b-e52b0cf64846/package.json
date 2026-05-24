@@ -1,6 +1,6 @@
 {
   "name": "browser-chess-game",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "type": "module",
   "description": "A browser-based chess game",
@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "audit:ci": "npm audit --audit-level=high",
     "test:unit": "node tests/unit_smoke.mjs",
+    "test:check": "node tests/check_rules.test.mjs",
     "test": "python tests/smoke_game.py",
     "run_smoke": "python tests/smoke_game.py"
   },
