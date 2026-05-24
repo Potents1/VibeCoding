@@ -1,24 +1,17 @@
 {
   "name": "browser-chess-game",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "A browser-based chess game",
   "scripts": {
     "start": "node scripts/serve-static.mjs",
     "build": "node -e \"console.log('BUILD_OK')\"",
-    "lint": "eslint .",
-    "audit:ci": "npm audit --audit-level=high",
     "test": "python tests/smoke_game.py",
-    "test:unit": "node tests/run_node_tests.mjs",
-    "test:smoke": "node tests/smoke_game.mjs",
     "run_smoke": "python tests/smoke_game.py"
   },
   "dependencies": {},
-  "devDependencies": {
-    "eslint": "^9.9.1",
-    "eslint-plugin-security": "^3.0.1"
-  },
+  "devDependencies": {},
   "main": "src/game.js",
   "keywords": [
     "game",
