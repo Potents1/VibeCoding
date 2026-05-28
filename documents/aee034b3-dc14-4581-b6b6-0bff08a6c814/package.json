@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node scripts/serve-static.mjs",
     "build": "node -e \"console.log('BUILD_OK')\"",
+    "test:unit": "node tests/logic_smoke.mjs",
+    "test:smoke": "python tests/smoke_game.py",
     "test": "python tests/smoke_game.py",
     "run_smoke": "python tests/smoke_game.py"
   },
