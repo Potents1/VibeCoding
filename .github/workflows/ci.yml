@@ -31,7 +31,7 @@ jobs:
       - id: detect
         shell: bash
         run: |
-          has() { find . -path './.git' -prune -o -path '*/node_modules/*' -prune -o -name "$1" -print -quit | grep -q .; }
+          has() { find . -path './.git' -prune -o -path './documents/*' -prune -o -path './run_artifacts/*' -prune -o -path '*/node_modules/*' -prune -o -name "$1" -print -quit | grep -q .; }
 
           echo "node=$(has package.json && echo true || echo false)" >> "$GITHUB_OUTPUT"
           echo "python=$((has pyproject.toml || has requirements.txt || has setup.py) && echo true || echo false)" >> "$GITHUB_OUTPUT"
@@ -65,7 +65,7 @@ jobs:
             npm run build --if-present
             cd "$GITHUB_WORKSPACE"
             echo "::endgroup::"
-          done < <(find . -path '*/node_modules/*' -prune -o -name package.json -print)
+          done < <(find . -path './documents/*' -prune -o -path './run_artifacts/*' -prune -o -path '*/node_modules/*' -prune -o -name package.json -print)
 
       - name: Upload JS artifacts
         if: always()
@@ -97,7 +97,7 @@ jobs:
           [ -f requirements.txt ] && pip install -r requirements.txt
           [ -f requirements-dev.txt ] && pip install -r requirements-dev.txt
           [ -f pyproject.toml ] && pip install -e . || true
-          if find . -path './.git' -prune -o -path '*/node_modules/*' -prune -o -path '*/tests/*.py' -print -quit | grep -q .; then
+          if find . -path './.git' -prune -o -path './documents/*' -prune -o -path './run_artifacts/*' -prune -o -path '*/node_modules/*' -prune -o -path '*/tests/*.py' -print -quit | grep -q .; then
             python -m pip install pytest
             pytest -q
           else
