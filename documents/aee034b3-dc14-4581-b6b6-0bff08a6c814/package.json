@@ -1,0 +1,13 @@
+{
+  "name": "goal-aee034b3-dc14-4581-b6b6--program",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve-static.mjs",
+    "build": "node -e \"console.log('BUILD_OK')\"",
+    "test": "python tests/smoke_game.py",
+    "run_smoke": "python tests/smoke_game.py"
+  },
+  "main": "src/game.js"
+}
