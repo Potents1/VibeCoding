@@ -15,6 +15,9 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 permissions:
   contents: read
 
@@ -26,7 +29,7 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-node-deps
         with:
           node-version: ${{ inputs.node-version || '20' }}

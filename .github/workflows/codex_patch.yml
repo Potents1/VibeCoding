@@ -5,6 +5,9 @@ on:
     types: [ opened, synchronize, reopened, labeled ]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 permissions:
   contents: write
   pull-requests: write
@@ -84,7 +87,7 @@ jobs:
     if: needs.gate.outputs.mode == 'patch' && needs.gate.outputs.allowed == 'true'
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ needs.gate.outputs.pr_repo }}
           ref: ${{ needs.gate.outputs.pr_branch }}

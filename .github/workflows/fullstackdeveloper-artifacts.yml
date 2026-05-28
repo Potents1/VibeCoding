@@ -5,13 +5,16 @@ on:
   push:
     branches: [ main, develop ]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   publish-artifacts:
     name: Publish run_artifacts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Detect run artifacts
         id: detect
@@ -28,7 +31,7 @@ jobs:
 
       - name: Upload run artifacts
         if: steps.detect.outputs.has_artifacts == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: fullstackdeveloper-run-artifacts-${{ github.run_id }}
           path: |
