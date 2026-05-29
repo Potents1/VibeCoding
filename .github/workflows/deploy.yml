@@ -106,7 +106,8 @@ jobs:
         if: github.event_name != 'workflow_run'
         shell: powershell
         run: |
-          $artifactDir = Join-Path $PWD "artifact"
+          $artifactDir = Join-Path $env:RUNNER_TEMP "agi-package-artifact-${{ needs.resolve.outputs.release_id }}"
+          if (Test-Path $artifactDir) { Remove-Item -Recurse -Force $artifactDir }
           New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
           $releaseId = "${{ needs.resolve.outputs.release_id }}"
           $zipName = "agi-package-$releaseId.zip"
