@@ -106,15 +106,16 @@ jobs:
         if: github.event_name != 'workflow_run'
         shell: powershell
         run: |
-          New-Item -ItemType Directory -Force -Path artifact | Out-Null
+          $artifactDir = Join-Path $PWD "artifact"
+          New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
           $releaseId = "${{ needs.resolve.outputs.release_id }}"
           $zipName = "agi-package-$releaseId.zip"
-          $staging = Join-Path $PWD "artifact\package"
+          $staging = Join-Path $env:RUNNER_TEMP "agi-package-staging-$releaseId"
           if (Test-Path $staging) { Remove-Item -Recurse -Force $staging }
           New-Item -ItemType Directory -Force -Path $staging | Out-Null
-          robocopy $PWD $staging /E /XD .git .github venv __pycache__ .pytest_cache .ruff_cache agent-dashboard\node_modules /XF *.pyc | Out-Null
+          robocopy $PWD $staging /E /XD .git .github artifact venv __pycache__ .pytest_cache .ruff_cache agent-dashboard\node_modules /XF *.pyc | Out-Null
           if ($LASTEXITCODE -gt 7) { throw "Robocopy failed with code $LASTEXITCODE" }
-          Compress-Archive -Path "$staging\*" -DestinationPath (Join-Path $PWD "artifact\$zipName") -Force
+          Compress-Archive -Path "$staging\*" -DestinationPath (Join-Path $artifactDir $zipName) -Force
 
       - name: Locate artifact zip
         id: zip
