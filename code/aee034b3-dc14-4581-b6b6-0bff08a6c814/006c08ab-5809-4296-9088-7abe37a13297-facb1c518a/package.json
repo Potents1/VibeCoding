@@ -8,8 +8,8 @@
     "dev": "node scripts/serve-static.mjs",
     "build": "node -e \"console.log('BUILD_OK')\"",
     "test": "python tests/smoke_game.py",
-    "test:unit": "node tests/player_collision.test.js",
-    "test:smoke": "node tests/smoke_game.js",
+    "test:unit": "node --test tests/player_collision.test.js tests/reliability.test.js tests/perf_budget.test.js",
+    "test:smoke": "node tests/smoke_game.js && node tests/logic_smoke.mjs && node tests/ui_smoke.mjs",
     "audit": "node -e \"console.log('No dependencies to audit')\"",
     "run_smoke": "python tests/smoke_game.py"
   },

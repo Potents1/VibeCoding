@@ -55,7 +55,6 @@ export function stepApp(app, input, dt) {
     return { transitioned: false };
   }
 
-  // playing/won/lost: keep underlying sim stepping only in playing
   if (app.mode === 'playing') {
     stepGame(app.game, input, dt);
     if (app.game.status === 'won') app.mode = 'won';

@@ -76,7 +76,6 @@ async function tryUnlockAudioFromGesture() {
   audio.setMuted(app.muted);
 }
 
-// gesture unlock for iOS/Chrome autoplay policies
 window.addEventListener('pointerdown', tryUnlockAudioFromGesture, { passive: true, once: true });
 window.addEventListener('keydown', tryUnlockAudioFromGesture, { passive: true, once: true });
 
@@ -92,7 +91,6 @@ function loop(ts) {
     audio.play('ui');
   }
 
-  // fixed-step only when mode requires sim stepping
   for (let i = 0; i < 5 && acc >= FIXED_DT; i += 1) {
     const prevMode = app.mode;
     const prevStatus = app.game.status;
@@ -104,7 +102,6 @@ function loop(ts) {
       audio.play('ui');
     }
 
-    // audio cues when underlying status changes
     if (prevStatus !== app.game.status) {
       if (app.game.status === 'won') audio.play('win');
       if (app.game.status === 'lost') audio.play('lose');
@@ -115,13 +112,11 @@ function loop(ts) {
       if (app.mode === 'playing' && prevMode === 'paused') audio.play('ui');
     }
 
-    // shoot cue
     if (snap.shootPressed && app.mode === 'playing') audio.play('shoot');
 
     acc -= FIXED_DT;
   }
 
-  // render always
   renderFrame(ctx, canvas, app.game);
   syncUi();
   requestAnimationFrame(loop);
