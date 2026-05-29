@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Perform rollback
-        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -File {0}
         env:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |
@@ -48,7 +48,7 @@ jobs:
           powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/cicd/rollback_dev.ps1 -DeployRoot $deployPath
 
       - name: Health check after rollback
-        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -File {0}
         env:
           AGI_DEV_HEALTH_URL: ${{ vars.AGI_DEV_HEALTH_URL }}
         run: |
