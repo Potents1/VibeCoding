@@ -7,15 +7,21 @@
 - Overall Passed: `True`
 
 ## Files
-- `index.html`
-- `package.json`
+- `raycaster.js`
+- `renderer.js`
+- `input.js`
+- `assets.js`
+- `map1.js`
+- `raycaster.test.js`
+- `logic.js`
 - `game.js`
 - `input.js`
-- `logic.js`
+- `render.js`
+- `index.html`
+- `package.json`
 - `main.js`
 - `map.js`
 - `player.js`
-- `render.js`
 - `audio.js`
 - `collision.js`
 - `gamestate.js`
