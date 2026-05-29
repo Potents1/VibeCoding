@@ -104,9 +104,9 @@ jobs:
 
       - name: Build artifact locally for reusable/manual dispatch
         if: github.event_name != 'workflow_run'
-        shell: powershell
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         run: |
-          $artifactDir = Join-Path $env:RUNNER_TEMP "agi-package-artifact-${{ needs.resolve.outputs.release_id }}"
+          $artifactDir = Join-Path $PWD "artifact"
           if (Test-Path $artifactDir) { Remove-Item -Recurse -Force $artifactDir }
           New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
           $releaseId = "${{ needs.resolve.outputs.release_id }}"
@@ -120,14 +120,14 @@ jobs:
 
       - name: Locate artifact zip
         id: zip
-        shell: powershell
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         run: |
           $zip = Get-ChildItem -Path artifact -Recurse -Filter *.zip | Select-Object -First 1
           if (-not $zip) { throw "No artifact zip found under artifact/" }
           "zip_path=$($zip.FullName)" >> $env:GITHUB_OUTPUT
 
       - name: Deploy to local dev folder
-        shell: powershell
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         env:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |
@@ -135,19 +135,19 @@ jobs:
           if (-not $deployPath) { $deployPath = "${{ inputs.deploy_path }}" }
           if (-not $deployPath) { $deployPath = $env:AGI_DEV_DEPLOY_PATH }
           if (-not $deployPath) { $deployPath = "C:\Users\peter\source\repos\AGI-dev" }
-          ./scripts/cicd/deploy_dev.ps1 `
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/cicd/deploy_dev.ps1 `
             -ArtifactZip "${{ steps.zip.outputs.zip_path }}" `
             -DeployRoot $deployPath `
             -ReleaseId "${{ needs.resolve.outputs.release_id }}"
 
       - name: Health check
-        shell: powershell
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         env:
           AGI_DEV_HEALTH_URL: ${{ vars.AGI_DEV_HEALTH_URL }}
         run: |
           $url = $env:AGI_DEV_HEALTH_URL
           if (-not $url) { $url = "http://127.0.0.1:5000/health" }
-          ./scripts/cicd/health_check.ps1 -Url $url -Attempts 12 -DelaySeconds 5
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/cicd/health_check.ps1 -Url $url -Attempts 12 -DelaySeconds 5
 
       - name: Upload deployment logs and manifests
         if: always()
@@ -161,7 +161,7 @@ jobs:
           retention-days: 14
 
       - name: Deployment summary
-        shell: powershell
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         env:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |

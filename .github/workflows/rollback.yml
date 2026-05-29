@@ -38,21 +38,21 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Perform rollback
-        shell: powershell
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         env:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |
           $deployPath = "${{ github.event.inputs.deploy_path }}"
           if (-not $deployPath) { $deployPath = $env:AGI_DEV_DEPLOY_PATH }
           if (-not $deployPath) { $deployPath = "C:\Users\peter\source\repos\AGI-dev" }
-          ./scripts/cicd/rollback_dev.ps1 -DeployRoot $deployPath
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/cicd/rollback_dev.ps1 -DeployRoot $deployPath
 
       - name: Health check after rollback
-        shell: powershell
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         env:
           AGI_DEV_HEALTH_URL: ${{ vars.AGI_DEV_HEALTH_URL }}
         run: |
           $url = "${{ github.event.inputs.health_url }}"
           if (-not $url) { $url = $env:AGI_DEV_HEALTH_URL }
           if (-not $url) { $url = "http://127.0.0.1:5000/health" }
-          ./scripts/cicd/health_check.ps1 -Url $url -Attempts 12 -DelaySeconds 5
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/cicd/health_check.ps1 -Url $url -Attempts 12 -DelaySeconds 5
