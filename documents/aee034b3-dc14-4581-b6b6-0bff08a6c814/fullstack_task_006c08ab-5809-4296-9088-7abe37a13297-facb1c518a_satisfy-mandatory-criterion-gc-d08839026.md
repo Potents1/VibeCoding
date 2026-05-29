@@ -7,26 +7,22 @@
 - Overall Passed: `True`
 
 ## Files
-- `input.js`
 - `index.html`
-- `styles.css`
-- `reliability.test.js`
-- `perf_budget.test.js`
 - `package.json`
-- `smoke_game.py`
-- `main.js`
-- `gamestate.js`
-- `smoke_game.js`
 - `game.js`
+- `input.js`
 - `logic.js`
+- `main.js`
 - `map.js`
 - `player.js`
 - `render.js`
 - `audio.js`
 - `collision.js`
+- `gamestate.js`
 - `hud.js`
 - `menu.js`
 - `pause.js`
+- `styles.css`
 
 ## Commands
 - Profile: `web_static` (plan_run_command_incompatible)
