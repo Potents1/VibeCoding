@@ -104,7 +104,7 @@ jobs:
 
       - name: Build artifact locally for reusable/manual dispatch
         if: github.event_name != 'workflow_run'
-        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -File {0}
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((Get-Content -Raw -LiteralPath '{0}')))"
         run: |
           $artifactDir = Join-Path $PWD "artifact"
           if (Test-Path $artifactDir) { Remove-Item -Recurse -Force $artifactDir }
@@ -120,14 +120,14 @@ jobs:
 
       - name: Locate artifact zip
         id: zip
-        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -File {0}
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((Get-Content -Raw -LiteralPath '{0}')))"
         run: |
           $zip = Get-ChildItem -Path artifact -Recurse -Filter *.zip | Select-Object -First 1
           if (-not $zip) { throw "No artifact zip found under artifact/" }
           "zip_path=$($zip.FullName)" >> $env:GITHUB_OUTPUT
 
       - name: Deploy to local dev folder
-        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -File {0}
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((Get-Content -Raw -LiteralPath '{0}')))"
         env:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |
@@ -141,7 +141,7 @@ jobs:
             -ReleaseId "${{ needs.resolve.outputs.release_id }}"
 
       - name: Health check
-        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -File {0}
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((Get-Content -Raw -LiteralPath '{0}')))"
         env:
           AGI_DEV_HEALTH_URL: ${{ vars.AGI_DEV_HEALTH_URL }}
         run: |
@@ -161,7 +161,7 @@ jobs:
           retention-days: 14
 
       - name: Deployment summary
-        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -File {0}
+        shell: powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((Get-Content -Raw -LiteralPath '{0}')))"
         env:
           AGI_DEV_DEPLOY_PATH: ${{ vars.AGI_DEV_DEPLOY_PATH }}
         run: |
