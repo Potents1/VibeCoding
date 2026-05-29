@@ -1,0 +1,25 @@
+html,body{margin:0;padding:0;background:#070a14;color:#e8ecff;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+.wrap{display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:16px;box-sizing:border-box;}
+.stack{width:min(960px,100%);position:relative;}
+.topbar{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 10px 0;}
+.title{font-weight:800;letter-spacing:.08em;font-size:14px;opacity:.95;}
+.subtitle{font-size:12px;opacity:.75;}
+.bottombar{margin-top:10px;font-size:12px;opacity:.75;}
+#ui-root{position:absolute;inset:0;pointer-events:none;}
+#game-canvas{display:block;width:100%;height:auto;border:1px solid #263055;background:linear-gradient(#0b1638,#05060b);box-shadow:0 12px 40px rgba(0,0,0,.55);}
+.overlay{pointer-events:auto;position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);}
+.overlay.is-visible{display:flex;}
+.panel{background:rgba(12,16,32,.92);border:1px solid #2b3564;border-radius:10px;padding:18px 18px 14px;min-width:280px;max-width:360px;box-shadow:0 18px 60px rgba(0,0,0,.55);}
+.panel .title{font-size:18px;letter-spacing:.12em;margin-bottom:6px;}
+.panel .subtitle{margin-bottom:12px;}
+.btn{width:100%;margin:8px 0;padding:10px 12px;border-radius:10px;border:1px solid #3a4685;background:#2a356e;color:#e8ecff;font-weight:700;cursor:pointer;}
+.btn:hover{filter:brightness(1.08);}
+.btn-secondary{background:#141a35;}
+.help{margin-top:10px;font-size:12px;opacity:.85;line-height:1.35;}
+.hud{position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;gap:12px;pointer-events:none;}
+.hud-status{font-weight:700;font-size:14px;max-width:520px;text-shadow:0 2px 10px rgba(0,0,0,.6);}
+.hud-info{margin-top:6px;font-size:12px;opacity:.85;}
+.hud-hp{min-width:180px;text-align:right;}
+.hud-hp-label{font-size:12px;opacity:.8;margin-bottom:4px;}
+.hud-hp-bar{height:12px;border-radius:8px;background:#1f2442;border:1px solid #2c335c;overflow:hidden;}
+.hud-hp-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff2d55,#a7f3d0);}

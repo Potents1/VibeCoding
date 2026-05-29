@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>mini-wolf3d</title>
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="stack">
+      <div class="topbar">
+        <div class="title">MINI WOLF3D</div>
+        <div class="subtitle">Raycast FPS · Kill enemies, then reach the exit (cyan).</div>
+      </div>
+      <canvas id="game-canvas" width="640" height="720"></canvas>
+      <div id="ui-root"></div>
+      <div class="bottombar">Controls: W/S move · A/D strafe · Q/E or ←/→ turn · Space shoot · R reset</div>
+    </div>
+  </div>
+  <script type="module" src="src/game.js"></script>
+</body>
+</html>
