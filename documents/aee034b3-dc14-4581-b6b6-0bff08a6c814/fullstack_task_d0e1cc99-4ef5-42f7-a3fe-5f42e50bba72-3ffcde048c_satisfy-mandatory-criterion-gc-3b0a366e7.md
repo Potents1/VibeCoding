@@ -7,10 +7,6 @@
 - Overall Passed: `True`
 
 ## Files
-- `level1.json`
-- `perf.test.js`
-- `render.test.js`
-- `release_notes.md`
 - `index.html`
 - `package.json`
 - `game.js`
@@ -38,7 +34,7 @@
 - Profile: `web_static` (plan_run_command_incompatible)
 - Compile: `[]`
 - Test: `["python", "tests/smoke_game.py"]`
-- Unit Test: `["npm", "run", "test"]`
+- Unit Test: `["npm", "test"]`
 - Run: `["npm", "run", "build"]`
 
 ## Test Evidence
