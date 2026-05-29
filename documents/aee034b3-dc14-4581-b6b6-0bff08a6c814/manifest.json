@@ -1,0 +1,10 @@
+{
+  "name": "mini-wolf3d",
+  "version": "0.1.0",
+  "description": "Procedural raycast FPS (Wolfenstein 3D-inspired) with deterministic tests.",
+  "assets": {
+    "textures": [],
+    "audio": [],
+    "fonts": []
+  }
+}
