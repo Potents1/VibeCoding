@@ -1,0 +1,91 @@
+import { GRID_H, GRID_W, TILE } from './level.js';
+
+export function render(ctx, canvas, snap) {
+  const w = canvas.width;
+  const h = canvas.height;
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Fit grid into canvas with padding.
+  const pad = 20;
+  const gridPxW = GRID_W * TILE;
+  const gridPxH = GRID_H * TILE;
+  const scale = Math.min((w - pad * 2) / gridPxW, (h - pad * 2) / gridPxH);
+
+  const drawTile = TILE * scale;
+  const offsetX = (w - GRID_W * drawTile) / 2;
+  const offsetY = (h - GRID_H * drawTile) / 2;
+
+  // Background panel
+  ctx.fillStyle = 'rgba(255,255,255,0.03)';
+  ctx.fillRect(offsetX - 6, offsetY - 6, GRID_W * drawTile + 12, GRID_H * drawTile + 12);
+
+  // Tiles
+  for (let y = 0; y < GRID_H; y++) {
+    for (let x = 0; x < GRID_W; x++) {
+      const isWall = snap.level.grid[y][x] === 1;
+      ctx.fillStyle = isWall ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.03)';
+      ctx.fillRect(offsetX + x * drawTile, offsetY + y * drawTile, drawTile, drawTile);
+
+      // Subtle grid line
+      ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(offsetX + x * drawTile, offsetY + y * drawTile, drawTile, drawTile);
+    }
+  }
+
+  // Goal
+  ctx.fillStyle = 'rgba(34,197,94,0.85)';
+  ctx.fillRect(
+    offsetX + snap.level.goal.x * drawTile + 4,
+    offsetY + snap.level.goal.y * drawTile + 4,
+    drawTile - 8,
+    drawTile - 8
+  );
+
+  // Enemy
+  drawActor(ctx, offsetX, offsetY, drawTile, snap.enemy, 'rgba(239,68,68,0.95)');
+  // Player
+  drawActor(ctx, offsetX, offsetY, drawTile, snap.player, 'rgba(59,130,246,0.95)');
+
+  // Status overlay
+  if (snap.status !== 'running') {
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#e6edf3';
+    ctx.font = '700 36px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial';
+    ctx.fillText(snap.status === 'won' ? 'YOU WIN' : 'YOU LOSE', w / 2, h / 2 - 10);
+
+    ctx.font = '14px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial';
+    ctx.fillStyle = 'rgba(230,237,243,0.9)';
+    ctx.fillText('Click Restart to try again', w / 2, h / 2 + 26);
+  }
+}
+
+function drawActor(ctx, offsetX, offsetY, tile, pos, color) {
+  const x = offsetX + pos.x * tile;
+  const y = offsetY + pos.y * tile;
+  const r = Math.max(4, tile * 0.22);
+
+  ctx.fillStyle = color;
+  roundRect(ctx, x + 6, y + 6, tile - 12, tile - 12, r);
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.20)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}

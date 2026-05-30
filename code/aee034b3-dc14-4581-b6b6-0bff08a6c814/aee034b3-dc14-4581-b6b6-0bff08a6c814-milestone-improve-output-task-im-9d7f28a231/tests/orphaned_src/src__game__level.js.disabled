@@ -1,0 +1,40 @@
+// 0 = floor, 1 = wall
+export const TILE = 40;
+export const GRID_W = 20;
+export const GRID_H = 12;
+
+// A simple bordered arena with a few internal walls.
+export function makeLevel() {
+  const grid = Array.from({ length: GRID_H }, () => Array.from({ length: GRID_W }, () => 0));
+
+  for (let y = 0; y < GRID_H; y++) {
+    for (let x = 0; x < GRID_W; x++) {
+      if (x === 0 || y === 0 || x === GRID_W - 1 || y === GRID_H - 1) grid[y][x] = 1;
+    }
+  }
+
+  // Internal walls (deterministic layout).
+  for (let x = 3; x <= 16; x++) grid[3][x] = 1;
+  grid[3][9] = 0;
+  for (let x = 3; x <= 16; x++) grid[8][x] = 1;
+  grid[8][12] = 0;
+
+  for (let y = 4; y <= 7; y++) grid[y][6] = 1;
+  grid[6][6] = 0;
+  for (let y = 4; y <= 7; y++) grid[y][14] = 1;
+  grid[5][14] = 0;
+
+  const playerStart = { x: 2, y: 2 };
+  const goal = { x: GRID_W - 3, y: GRID_H - 3 };
+  const enemyStart = { x: GRID_W - 3, y: 2 };
+
+  return { grid, playerStart, enemyStart, goal };
+}
+
+export function isWall(level, pos) {
+  return level.grid[pos.y]?.[pos.x] === 1;
+}
+
+export function inBounds(pos) {
+  return pos.x >= 0 && pos.y >= 0 && pos.x < GRID_W && pos.y < GRID_H;
+}

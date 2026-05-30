@@ -1,0 +1,86 @@
+export function render(ctx, state) {
+  const { player, enemy, walls, exit } = state;
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  // Backdrop grid
+  ctx.save();
+  ctx.globalAlpha = 0.22;
+  ctx.strokeStyle = '#24345f';
+  ctx.lineWidth = 1;
+  for (let x = 0; x <= ctx.canvas.width; x += 40) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, ctx.canvas.height);
+    ctx.stroke();
+  }
+  for (let y = 0; y <= ctx.canvas.height; y += 40) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(ctx.canvas.width, y);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Walls
+  ctx.save();
+  ctx.fillStyle = 'rgba(255,255,255,0.10)';
+  for (const w of walls) {
+    ctx.fillRect(w.x, w.y, w.w, w.h);
+  }
+  ctx.restore();
+
+  // Exit
+  ctx.save();
+  ctx.fillStyle = 'rgba(94, 234, 212, 0.22)';
+  ctx.strokeStyle = 'rgba(94, 234, 212, 0.85)';
+  ctx.lineWidth = 3;
+  roundRect(ctx, exit.x, exit.y, exit.w, exit.h, 14);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  // Player
+  ctx.save();
+  ctx.fillStyle = '#93c5fd';
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = 2;
+  roundRect(ctx, player.x, player.y, player.w, player.h, 10);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  // Enemy
+  ctx.save();
+  ctx.fillStyle = '#fb7185';
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = 2;
+  roundRect(ctx, enemy.x, enemy.y, enemy.w, enemy.h, 10);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  // HUD
+  ctx.save();
+  ctx.font = '18px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+  ctx.fillStyle = 'rgba(232, 238, 255, 0.92)';
+  const text =
+    state.status === 'playing'
+      ? 'Reach the exit. Avoid the pursuer.'
+      : state.status === 'won'
+        ? 'Escaped! Press R or Restart.'
+        : 'Caught! Press R or Restart.';
+  ctx.fillText(text, 24, 42);
+  ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}

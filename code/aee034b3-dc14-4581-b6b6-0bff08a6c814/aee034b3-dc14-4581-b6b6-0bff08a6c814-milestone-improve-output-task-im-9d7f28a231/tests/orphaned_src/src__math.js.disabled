@@ -1,0 +1,29 @@
+export function clamp(v, lo, hi) {
+  return Math.max(lo, Math.min(hi, v));
+}
+
+export function len2(x, y) {
+  return x * x + y * y;
+}
+
+export function len(x, y) {
+  return Math.sqrt(len2(x, y));
+}
+
+export function norm(x, y) {
+  const l = len(x, y);
+  if (l <= 1e-9) return { x: 0, y: 0, l: 0 };
+  return { x: x / l, y: y / l, l };
+}
+
+export function dist2(a, b) {
+  return len2(a.x - b.x, a.y - b.y);
+}
+
+export function aabbCircleCollides(aabb, cx, cy, r) {
+  const closestX = clamp(cx, aabb.x, aabb.x + aabb.w);
+  const closestY = clamp(cy, aabb.y, aabb.y + aabb.h);
+  const dx = cx - closestX;
+  const dy = cy - closestY;
+  return dx * dx + dy * dy <= r * r;
+}

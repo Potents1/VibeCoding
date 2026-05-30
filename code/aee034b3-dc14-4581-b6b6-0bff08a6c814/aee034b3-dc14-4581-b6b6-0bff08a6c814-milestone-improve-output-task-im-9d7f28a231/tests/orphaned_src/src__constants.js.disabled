@@ -1,0 +1,28 @@
+export const WORLD_W = 160;
+export const WORLD_H = 90;
+
+export const TILE = 10;
+
+export const PLAYER_RADIUS = 2.2;
+export const PLAYER_SPEED = 34;
+
+export const DRONE_RADIUS = 2.0;
+export const DRONE_SPEED = 18;
+
+export const GOAL_RADIUS = 3.2;
+
+export const FIXED_DT = 1 / 60;
+
+export const COLORS = {
+  bg0: "#060911",
+  grid: "rgba(255,255,255,0.06)",
+  wall: "rgba(120,140,255,0.18)",
+  player: "#4cc9f0",
+  playerGlow: "rgba(76,201,240,0.45)",
+  drone: "#f72585",
+  droneGlow: "rgba(247,37,133,0.38)",
+  goal: "#80ed99",
+  goalGlow: "rgba(128,237,153,0.35)",
+  text: "rgba(234,242,255,0.92)",
+  textDim: "rgba(234,242,255,0.70)"
+};

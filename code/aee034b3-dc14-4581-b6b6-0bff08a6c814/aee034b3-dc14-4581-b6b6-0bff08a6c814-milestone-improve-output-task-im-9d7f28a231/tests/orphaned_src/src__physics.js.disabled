@@ -1,0 +1,22 @@
+import { aabbCircleCollides } from "./math.js";
+
+export function tryMoveCircleWithWalls(entity, dx, dy, walls) {
+  let nx = entity.x + dx;
+  let ny = entity.y;
+  if (!circleHitsWalls(nx, ny, entity.r, walls)) {
+    entity.x = nx;
+  }
+
+  nx = entity.x;
+  ny = entity.y + dy;
+  if (!circleHitsWalls(nx, ny, entity.r, walls)) {
+    entity.y = ny;
+  }
+}
+
+export function circleHitsWalls(cx, cy, r, walls) {
+  for (const w of walls) {
+    if (aabbCircleCollides(w, cx, cy, r)) return true;
+  }
+  return false;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "web-static-game",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node ./scripts/serve-static.mjs",
+    "test": "npm run test:unit && npm run test:smoke",
+    "test:unit": "node --test tests/perf.test.js tests/perf_budget.test.js tests/player_collision.test.js tests/raycaster.test.js tests/reliability.test.js",
+    "test:smoke": "node tests/smoke_game.js && node tests/logic_smoke.mjs && node tests/ui_smoke.mjs",
+    "test:smoke:headed": "playwright test --headed",
+    "build": "node --check src/main.js",
+    "run_smoke": "npm run test:smoke"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "vite": "^6.0.0",
+    "vitest": "^3.2.4"
+  },
+  "version": "0.0.1",
+  "main": "src/game.js"
+}

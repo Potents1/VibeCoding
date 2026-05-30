@@ -1,0 +1,46 @@
+export function createInput(target = window) {
+  const state = {
+    up: false,
+    down: false,
+    left: false,
+    right: false
+  };
+
+  const keyMap = new Map([
+    ['ArrowUp', 'up'],
+    ['KeyW', 'up'],
+    ['ArrowDown', 'down'],
+    ['KeyS', 'down'],
+    ['ArrowLeft', 'left'],
+    ['KeyA', 'left'],
+    ['ArrowRight', 'right'],
+    ['KeyD', 'right']
+  ]);
+
+  function onKey(e, isDown) {
+    const mapped = keyMap.get(e.code);
+    if (!mapped) return;
+    state[mapped] = isDown;
+    e.preventDefault();
+  }
+
+  const down = (e) => onKey(e, true);
+  const up = (e) => onKey(e, false);
+
+  target.addEventListener('keydown', down, { passive: false });
+  target.addEventListener('keyup', up, { passive: false });
+
+  return {
+    state,
+    dispose() {
+      target.removeEventListener('keydown', down);
+      target.removeEventListener('keyup', up);
+    },
+    // For tests
+    __testPress(key, isDown) {
+      const code = String(key);
+      const mapped = keyMap.get(code);
+      if (mapped) state[mapped] = Boolean(isDown);
+    }
+  };
+}

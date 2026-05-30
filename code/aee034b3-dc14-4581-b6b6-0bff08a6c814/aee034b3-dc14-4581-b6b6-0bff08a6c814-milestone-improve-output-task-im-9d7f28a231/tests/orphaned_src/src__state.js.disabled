@@ -1,0 +1,65 @@
+import {
+  DRONE_RADIUS,
+  DRONE_SPEED,
+  GOAL_RADIUS,
+  PLAYER_RADIUS,
+  PLAYER_SPEED
+} from "./constants.js";
+import { dist2, norm } from "./math.js";
+
+export function makeInitialState(level, seed = 1337) {
+  const drones = level.droneSpawns.map((s, idx) => ({
+    id: idx,
+    x: s.x,
+    y: s.y,
+    dirX: s.dir.x,
+    dirY: s.dir.y,
+    min: s.min,
+    max: s.max,
+    speed: DRONE_SPEED
+  }));
+
+  return {
+    seed,
+    time: 0,
+    phase: "playing", // playing|won|lost
+    player: {
+      x: level.spawn.x,
+      y: level.spawn.y,
+      r: PLAYER_RADIUS,
+      speed: PLAYER_SPEED
+    },
+    goal: {
+      x: level.goal.x,
+      y: level.goal.y,
+      r: GOAL_RADIUS
+    },
+    drones,
+    stats: {
+      deaths: 0,
+      wins: 0
+    }
+  };
+}
+
+export function computeMoveVector(inputState) {
+  const x = (inputState.right ? 1 : 0) - (inputState.left ? 1 : 0);
+  const y = (inputState.down ? 1 : 0) - (inputState.up ? 1 : 0);
+  const n = norm(x, y);
+  return { x: n.x, y: n.y };
+}
+
+export function playerReachedGoal(state) {
+  const rr = (state.player.r + state.goal.r) ** 2;
+  return dist2(state.player, state.goal) <= rr;
+}
+
+export function playerHitDrone(state) {
+  for (const d of state.drones) {
+    const rr = (state.player.r + DRONE_RADIUS) ** 2;
+    const dx = state.player.x - d.x;
+    const dy = state.player.y - d.y;
+    if (dx * dx + dy * dy <= rr) return true;
+  }
+  return false;
+}

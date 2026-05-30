@@ -1,0 +1,35 @@
+import { addPos, manhattan } from './math.js';
+import { inBounds, isWall } from './level.js';
+
+const DIRS = [
+  { x: 1, y: 0 },
+  { x: -1, y: 0 },
+  { x: 0, y: 1 },
+  { x: 0, y: -1 }
+];
+
+export function chooseEnemyMove(level, enemyPos, playerPos, rngFloat) {
+  // Greedy chase with deterministic tie-breaking using rng.
+  // Pick a move that minimizes manhattan distance.
+  let best = null;
+  let bestDist = Infinity;
+
+  // Deterministic pseudo-shuffle based on rng.
+  const dirs = DIRS.slice();
+  for (let i = dirs.length - 1; i > 0; i--) {
+    const j = Math.floor(rngFloat() * (i + 1));
+    [dirs[i], dirs[j]] = [dirs[j], dirs[i]];
+  }
+
+  for (const d of dirs) {
+    const next = addPos(enemyPos, d);
+    if (!inBounds(next) || isWall(level, next)) continue;
+    const dist = manhattan(next, playerPos);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = next;
+    }
+  }
+
+  return best ?? enemyPos;
+}

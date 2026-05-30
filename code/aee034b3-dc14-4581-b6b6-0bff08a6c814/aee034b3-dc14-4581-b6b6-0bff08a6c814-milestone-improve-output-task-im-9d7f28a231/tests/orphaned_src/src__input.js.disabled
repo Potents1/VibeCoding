@@ -1,0 +1,58 @@
+export function makeInput() {
+  const state = {
+    left: false,
+    right: false,
+    up: false,
+    down: false,
+    restart: false
+  };
+
+  function setKey(code, on) {
+    switch (code) {
+      case "ArrowLeft":
+      case "KeyA":
+        state.left = on;
+        break;
+      case "ArrowRight":
+      case "KeyD":
+        state.right = on;
+        break;
+      case "ArrowUp":
+      case "KeyW":
+        state.up = on;
+        break;
+      case "ArrowDown":
+      case "KeyS":
+        state.down = on;
+        break;
+      case "KeyR":
+        if (on) state.restart = true;
+        break;
+      default:
+        break;
+    }
+  }
+
+  function consumeRestart() {
+    const v = state.restart;
+    state.restart = false;
+    return v;
+  }
+
+  return { state, setKey, consumeRestart };
+}
+
+export function attachKeyboard(input, target = window) {
+  function onDown(e) {
+    input.setKey(e.code, true);
+  }
+  function onUp(e) {
+    input.setKey(e.code, false);
+  }
+  target.addEventListener("keydown", onDown);
+  target.addEventListener("keyup", onUp);
+  return () => {
+    target.removeEventListener("keydown", onDown);
+    target.removeEventListener("keyup", onUp);
+  };
+}
