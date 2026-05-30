@@ -1,87 +1,92 @@
-import { createInput } from './input.js';
-import { renderFrame } from './engine/renderer.js';
-import { createAppState, stepApp, resetGame, startGame } from './state/gameState.js';
+import {
+  createGame,
+  queueInput,
+  stepGame,
+  resetGame,
+  togglePause,
+  INPUT,
+  GAME_STATUS
+} from "./game.js";
+import { render } from "./render.js";
 
-const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('game-canvas'));
-const overlayMenu = document.getElementById('overlay-menu');
-const overlayPaused = document.getElementById('overlay-paused');
-const btnStart = document.getElementById('btn-start');
-const btnMute = document.getElementById('btn-mute');
-const btnResume = document.getElementById('btn-resume');
-const btnRestart = document.getElementById('btn-restart');
-const hudStatus = document.getElementById('hud-status');
-const hudInfo = document.getElementById('hud-info');
-const hudHpFill = document.getElementById('hud-hp-fill');
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+const statusEl = document.getElementById("status");
+const restartBtn = document.getElementById("restart");
+const pauseBtn = document.getElementById("pause");
 
-/** @type {CanvasRenderingContext2D} */
-const ctx = canvas.getContext('2d', { alpha: false });
+let state = createGame({ seed: 1337 });
+let rafId = null;
+let lastTime = performance.now();
+let accumulatorMs = 0;
+const stepMs = 1000 / 12; // 12 ticks/sec deterministic-ish
 
-const input = createInput();
-input.attach(window);
-
-const app = createAppState();
-
-function setOverlay(el, visible) {
-  if (!el) return;
-  el.classList.toggle('is-visible', visible);
+function updateStatus() {
+  const base = `Tick ${state.tick}`;
+  let suffix = "";
+  if (state.status === GAME_STATUS.won) suffix = " — Won";
+  else if (state.status === GAME_STATUS.lost) suffix = " — Lost";
+  else if (state.status === GAME_STATUS.paused) suffix = " — Paused";
+  statusEl.textContent = base + suffix;
 }
 
-function updateUi() {
-  setOverlay(overlayMenu, app.mode === 'menu');
-  setOverlay(overlayPaused, app.mode === 'paused');
+function loop(now) {
+  const dt = Math.min(50, now - lastTime);
+  lastTime = now;
+  accumulatorMs += dt;
 
-  const g = app.game;
-  const hpPct = Math.max(0, Math.min(1, g.player.hp / g.player.maxHp)) * 100;
-  if (hudHpFill) hudHpFill.style.width = `${hpPct.toFixed(1)}%`;
+  while (accumulatorMs >= stepMs) {
+    stepGame(state);
+    accumulatorMs -= stepMs;
+  }
 
-  const status =
-    app.mode === 'menu'
-      ? 'Menu • Press Enter or Start'
-      : app.mode === 'paused'
-        ? 'Paused • Esc to resume'
-        : app.mode === 'won'
-          ? 'Escaped!'
-          : app.mode === 'lost'
-            ? 'You died.'
-            : 'Playing';
+  render(ctx, state, { tileSize: 32 });
+  updateStatus();
 
-  if (hudStatus) hudStatus.textContent = status;
-
-  const info =
-    app.mode === 'playing'
-      ? g.statusText
-      : app.mode === 'won' || app.mode === 'lost'
-        ? `${g.statusText}`
-        : '';
-  if (hudInfo) hudInfo.textContent = info;
+  rafId = requestAnimationFrame(loop);
 }
 
-btnStart?.addEventListener('click', () => input.pressVirtual('Enter'));
-btnMute?.addEventListener('click', () => input.pressVirtual('KeyM'));
-btnResume?.addEventListener('click', () => input.pressVirtual('Escape'));
-btnRestart?.addEventListener('click', () => input.pressVirtual('KeyR'));
-
-let last = performance.now();
-
-function frame(now) {
-  const dt = Math.min(0.05, (now - last) / 1000);
-  last = now;
-
-  const inp = input.poll();
-  stepApp(app, inp, dt);
-
-  renderFrame(ctx, canvas, app.game);
-  updateUi();
-
-  requestAnimationFrame(frame);
+function normalizeKey(e) {
+  const k = e.key;
+  if (k === "ArrowUp" || k === "w" || k === "W") return INPUT.up;
+  if (k === "ArrowDown" || k === "s" || k === "S") return INPUT.down;
+  if (k === "ArrowLeft" || k === "a" || k === "A") return INPUT.left;
+  if (k === "ArrowRight" || k === "d" || k === "D") return INPUT.right;
+  return null;
 }
 
-// Test hook for Playwright / harnesses
-window.__game = {
-  getApp: () => structuredClone(app),
-  reset: () => resetGame(app),
-  start: () => startGame(app)
-};
+window.addEventListener("keydown", (e) => {
+  if (e.key === "r" || e.key === "R") {
+    resetGame(state);
+    return;
+  }
+  if (e.key === "p" || e.key === "P") {
+    togglePause(state);
+    return;
+  }
 
-updateUi();
-requestAnimationFrame(frame);
+  const input = normalizeKey(e);
+  if (!input) return;
+  if (state.status !== GAME_STATUS.playing) return;
+
+  e.preventDefault();
+  queueInput(state, input);
+});
+
+restartBtn.addEventListener("click", () => resetGame(state));
+
+pauseBtn.addEventListener("click", () => {
+  togglePause(state);
+  pauseBtn.textContent = state.status === GAME_STATUS.paused ? "Resume" : "Pause";
+});
+
+function start() {
+  if (rafId) cancelAnimationFrame(rafId);
+  lastTime = performance.now();
+  accumulatorMs = 0;
+  updateStatus();
+  render(ctx, state, { tileSize: 32 });
+  rafId = requestAnimationFrame(loop);
+}
+
+start();

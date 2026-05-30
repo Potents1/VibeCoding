@@ -1,228 +1,220 @@
-import { aabbIntersect, clamp } from './geom.js';
-import { mulberry32 } from './rng.js';
+import { mulberry32, randInt } from "./rng.js";
 
-export const GAME = {
-  worldW: 1280,
-  worldH: 720,
-  playerSize: 34,
-  enemySize: 34,
-  exitSize: 56,
-  wallThickness: 22,
-  playerSpeed: 420,
-  enemySpeed: 300,
-  enemyTurnRate: 2.8
+export const GAME_STATUS = {
+  playing: "playing",
+  won: "won",
+  lost: "lost",
+  paused: "paused"
 };
 
-function rect(x, y, w, h) {
-  return { x, y, w, h };
+export const INPUT = {
+  up: "up",
+  down: "down",
+  left: "left",
+  right: "right",
+  none: "none"
+};
+
+function posKey(x, y) {
+  return `${x},${y}`;
 }
 
-function buildWalls() {
-  const t = GAME.wallThickness;
-  const W = GAME.worldW;
-  const H = GAME.worldH;
+export function createDefaultLevel() {
+  // Grid 20x15 (fits 640x480 with 32px tiles)
+  const width = 20;
+  const height = 15;
 
-  const walls = [];
-  // Border
-  walls.push(rect(0, 0, W, t));
-  walls.push(rect(0, H - t, W, t));
-  walls.push(rect(0, 0, t, H));
-  walls.push(rect(W - t, 0, t, H));
+  const walls = new Set();
 
-  // Interior maze-ish blocks (hand-authored, deterministic)
-  walls.push(rect(180, 120, 520, 22));
-  walls.push(rect(180, 120, 22, 360));
-  walls.push(rect(420, 240, 22, 360));
-  walls.push(rect(580, 120, 22, 240));
+  // Border walls
+  for (let x = 0; x < width; x++) {
+    walls.add(posKey(x, 0));
+    walls.add(posKey(x, height - 1));
+  }
+  for (let y = 0; y < height; y++) {
+    walls.add(posKey(0, y));
+    walls.add(posKey(width - 1, y));
+  }
 
-  walls.push(rect(760, 120, 22, 420));
-  walls.push(rect(760, 520, 360, 22));
-  walls.push(rect(980, 240, 22, 240));
+  // Interior maze-ish walls (deterministic layout)
+  const segments = [
+    // horizontal
+    { x1: 2, y: 3, x2: 17 },
+    { x1: 2, y: 11, x2: 17 },
+    // vertical pillars
+    { x: 5, y1: 2, y2: 6 },
+    { x: 14, y1: 8, y2: 12 },
+    { x: 10, y1: 4, y2: 10 }
+  ];
 
-  walls.push(rect(220, 520, 420, 22));
-  walls.push(rect(580, 360, 260, 22));
+  for (const s of segments) {
+    if (typeof s.y === "number") {
+      for (let x = s.x1; x <= s.x2; x++) walls.add(posKey(x, s.y));
+    } else if (typeof s.x === "number") {
+      for (let y = s.y1; y <= s.y2; y++) walls.add(posKey(s.x, y));
+    }
+  }
 
-  return walls;
+  const start = { x: 2, y: 2 };
+  const goal = { x: 17, y: 12 };
+
+  // Ensure start/goal are clear
+  walls.delete(posKey(start.x, start.y));
+  walls.delete(posKey(goal.x, goal.y));
+
+  return { width, height, walls, start, goal };
 }
 
-function resolveWallCollisions(body, walls) {
-  // Axis-separating resolution (x then y), using previous position
-  for (const wall of walls) {
-    if (!aabbIntersect(body, wall)) continue;
+export function createGame({ seed = 1234, level = createDefaultLevel() } = {}) {
+  const rng = mulberry32(seed);
 
-    const overlapL = body.x + body.w - wall.x;
-    const overlapR = wall.x + wall.w - body.x;
-    const overlapT = body.y + body.h - wall.y;
-    const overlapB = wall.y + wall.h - body.y;
+  const player = { x: level.start.x, y: level.start.y };
 
-    const minX = Math.min(overlapL, overlapR);
-    const minY = Math.min(overlapT, overlapB);
+  // Two enemies placed away from the start
+  const enemies = [];
+  const forbidden = new Set([
+    posKey(player.x, player.y),
+    posKey(level.goal.x, level.goal.y)
+  ]);
 
-    if (minX < minY) {
-      if (overlapL < overlapR) body.x -= overlapL;
-      else body.x += overlapR;
-    } else {
-      if (overlapT < overlapB) body.y -= overlapT;
-      else body.y += overlapB;
+  const desiredEnemies = 2;
+  while (enemies.length < desiredEnemies) {
+    const x = randInt(rng, 1, level.width - 1);
+    const y = randInt(rng, 1, level.height - 1);
+    const key = posKey(x, y);
+    if (level.walls.has(key) || forbidden.has(key)) continue;
+    // Avoid too close to player
+    const manhattan = Math.abs(x - player.x) + Math.abs(y - player.y);
+    if (manhattan < 8) continue;
+    forbidden.add(key);
+    enemies.push({ x, y });
+  }
+
+  return {
+    tick: 0,
+    status: GAME_STATUS.playing,
+    level,
+    player,
+    enemies,
+    rngSeed: seed,
+    inputQueue: []
+  };
+}
+
+export function queueInput(state, input) {
+  if (!state || !input) return;
+  state.inputQueue.push(input);
+}
+
+export function togglePause(state) {
+  if (state.status === GAME_STATUS.paused) state.status = GAME_STATUS.playing;
+  else if (state.status === GAME_STATUS.playing) state.status = GAME_STATUS.paused;
+}
+
+export function tryMove(level, entity, dx, dy) {
+  const nx = entity.x + dx;
+  const ny = entity.y + dy;
+  if (nx < 0 || ny < 0 || nx >= level.width || ny >= level.height) return false;
+  if (level.walls.has(posKey(nx, ny))) return false;
+  entity.x = nx;
+  entity.y = ny;
+  return true;
+}
+
+function applyPlayerInput(state) {
+  const input = state.inputQueue.shift() ?? INPUT.none;
+  switch (input) {
+    case INPUT.up:
+      tryMove(state.level, state.player, 0, -1);
+      break;
+    case INPUT.down:
+      tryMove(state.level, state.player, 0, 1);
+      break;
+    case INPUT.left:
+      tryMove(state.level, state.player, -1, 0);
+      break;
+    case INPUT.right:
+      tryMove(state.level, state.player, 1, 0);
+      break;
+    default:
+      break;
+  }
+}
+
+function enemyStepToward(level, enemy, target) {
+  const dx = target.x - enemy.x;
+  const dy = target.y - enemy.y;
+
+  const options = [];
+  if (dx !== 0) options.push({ dx: Math.sign(dx), dy: 0 });
+  if (dy !== 0) options.push({ dx: 0, dy: Math.sign(dy) });
+
+  // Prefer reducing Manhattan distance, but fall back to the other axis if blocked.
+  for (const opt of options) {
+    const copy = { x: enemy.x, y: enemy.y };
+    if (tryMove(level, copy, opt.dx, opt.dy)) {
+      enemy.x = copy.x;
+      enemy.y = copy.y;
+      return;
+    }
+  }
+
+  // If both primary moves blocked, try perpendicular detours (deterministic order).
+  const detours = [
+    { dx: 1, dy: 0 },
+    { dx: -1, dy: 0 },
+    { dx: 0, dy: 1 },
+    { dx: 0, dy: -1 }
+  ];
+  for (const d of detours) {
+    const copy = { x: enemy.x, y: enemy.y };
+    if (tryMove(level, copy, d.dx, d.dy)) {
+      enemy.x = copy.x;
+      enemy.y = copy.y;
+      return;
     }
   }
 }
 
-function normalize(x, y) {
-  const len = Math.hypot(x, y);
-  if (len < 1e-9) return { x: 0, y: 0 };
-  return { x: x / len, y: y / len };
+function checkEndConditions(state) {
+  const { player, enemies, level } = state;
+
+  for (const e of enemies) {
+    if (e.x === player.x && e.y === player.y) {
+      state.status = GAME_STATUS.lost;
+      return;
+    }
+  }
+
+  if (player.x === level.goal.x && player.y === level.goal.y) {
+    state.status = GAME_STATUS.won;
+  }
 }
 
-export function createGame({ seed = 1337 } = {}) {
-  const rng = mulberry32(seed);
-  const walls = buildWalls();
+export function stepGame(state) {
+  if (state.status !== GAME_STATUS.playing) return state;
 
-  const player = {
-    x: 80,
-    y: 80,
-    w: GAME.playerSize,
-    h: GAME.playerSize,
-    vx: 0,
-    vy: 0
-  };
+  state.tick++;
 
-  const enemy = {
-    x: 1120,
-    y: 600,
-    w: GAME.enemySize,
-    h: GAME.enemySize,
-    vx: 0,
-    vy: 0,
-    dirX: -1,
-    dirY: 0
-  };
+  // Player moves every tick.
+  applyPlayerInput(state);
 
-  // Exit placed in a consistent reachable pocket
-  const exit = {
-    x: 1160,
-    y: 70,
-    w: GAME.exitSize,
-    h: GAME.exitSize
-  };
+  // Enemies move every other tick for fairness.
+  if (state.tick % 2 === 0) {
+    for (const e of state.enemies) enemyStepToward(state.level, e, state.player);
+  }
 
-  const state = {
-    seed,
-    t: 0,
-    status: 'playing',
-    reason: '',
-    walls,
-    player,
-    enemy,
-    exit,
-    scoreTime: 0,
-    rngTick: 0,
-    rng,
-    lastInput: { x: 0, y: 0 }
-  };
-
-  // Small deterministic jitter so the enemy isn't perfectly linear
-  state.enemy.dirX = rng() < 0.5 ? -1 : 1;
-  state.enemy.dirY = rng() < 0.5 ? -1 : 1;
-
+  checkEndConditions(state);
   return state;
 }
 
-export function stepGame(state, input, dt) {
-  const s = state;
-  s.t += dt;
-  s.scoreTime += dt;
-  s.lastInput = { x: input.x, y: input.y };
-
-  if (s.status !== 'playing') {
-    return s;
-  }
-
-  // Player move
-  const mv = normalize(input.x, input.y);
-  s.player.vx = mv.x * GAME.playerSpeed;
-  s.player.vy = mv.y * GAME.playerSpeed;
-
-  const px0 = s.player.x;
-  const py0 = s.player.y;
-  s.player.x += s.player.vx * dt;
-  s.player.y += s.player.vy * dt;
-
-  // Clamp to world then resolve walls
-  s.player.x = clamp(s.player.x, 0, GAME.worldW - s.player.w);
-  s.player.y = clamp(s.player.y, 0, GAME.worldH - s.player.h);
-  resolveWallCollisions(s.player, s.walls);
-
-  // If stuck inside wall due to dt spikes, revert
-  for (const w of s.walls) {
-    if (aabbIntersect(s.player, w)) {
-      s.player.x = px0;
-      s.player.y = py0;
-      break;
-    }
-  }
-
-  // Enemy: steer toward player with limited turn rate + deterministic jitter
-  s.rngTick++;
-  const jitter = (s.rng() - 0.5) * 0.35;
-  const toPx = (s.player.x + s.player.w / 2) - (s.enemy.x + s.enemy.w / 2);
-  const toPy = (s.player.y + s.player.h / 2) - (s.enemy.y + s.enemy.h / 2);
-  const desired = normalize(toPx, toPy);
-
-  // Smooth direction change
-  const lerp = 1 - Math.exp(-GAME.enemyTurnRate * dt);
-  let dx = s.enemy.dirX + (desired.x - s.enemy.dirX) * lerp;
-  let dy = s.enemy.dirY + (desired.y - s.enemy.dirY) * lerp;
-  const n = normalize(dx, dy);
-  dx = n.x;
-  dy = n.y;
-
-  // Add a tiny lateral component for variety (still deterministic)
-  const latX = -dy;
-  const latY = dx;
-  dx = normalize(dx + latX * jitter, dy + latY * jitter).x;
-  dy = normalize(dx, dy).y;
-
-  s.enemy.dirX = dx;
-  s.enemy.dirY = dy;
-  s.enemy.vx = dx * GAME.enemySpeed;
-  s.enemy.vy = dy * GAME.enemySpeed;
-
-  const ex0 = s.enemy.x;
-  const ey0 = s.enemy.y;
-  s.enemy.x += s.enemy.vx * dt;
-  s.enemy.y += s.enemy.vy * dt;
-  s.enemy.x = clamp(s.enemy.x, 0, GAME.worldW - s.enemy.w);
-  s.enemy.y = clamp(s.enemy.y, 0, GAME.worldH - s.enemy.h);
-  resolveWallCollisions(s.enemy, s.walls);
-
-  // If enemy gets wedged, bounce direction deterministically
-  let enemyInside = false;
-  for (const w of s.walls) {
-    if (aabbIntersect(s.enemy, w)) {
-      enemyInside = true;
-      break;
-    }
-  }
-  if (enemyInside) {
-    s.enemy.x = ex0;
-    s.enemy.y = ey0;
-    const flip = s.rng() < 0.5 ? -1 : 1;
-    s.enemy.dirX = clamp(-s.enemy.dirX * flip, -1, 1);
-    s.enemy.dirY = clamp(-s.enemy.dirY * -flip, -1, 1);
-  }
-
-  // Lose: enemy touches player
-  if (aabbIntersect(s.player, s.enemy)) {
-    s.status = 'lost';
-    s.reason = 'caught';
-  }
-
-  // Win: player reaches exit
-  if (s.status === 'playing' && aabbIntersect(s.player, s.exit)) {
-    s.status = 'won';
-    s.reason = 'escaped';
-  }
-
-  return s;
+export function resetGame(state) {
+  const fresh = createGame({ seed: state.rngSeed, level: state.level });
+  state.tick = fresh.tick;
+  state.status = fresh.status;
+  state.player.x = fresh.player.x;
+  state.player.y = fresh.player.y;
+  state.enemies.length = 0;
+  for (const e of fresh.enemies) state.enemies.push(e);
+  state.inputQueue.length = 0;
 }

@@ -1,58 +1,54 @@
-export function makeInput() {
-  const state = {
-    left: false,
-    right: false,
-    up: false,
-    down: false,
-    restart: false
-  };
+export function createInput() {
+  const keys = new Set();
+  const justPressed = new Set();
 
-  function setKey(code, on) {
-    switch (code) {
-      case "ArrowLeft":
-      case "KeyA":
-        state.left = on;
-        break;
-      case "ArrowRight":
-      case "KeyD":
-        state.right = on;
-        break;
-      case "ArrowUp":
-      case "KeyW":
-        state.up = on;
-        break;
-      case "ArrowDown":
-      case "KeyS":
-        state.down = on;
-        break;
-      case "KeyR":
-        if (on) state.restart = true;
-        break;
-      default:
-        break;
-    }
+  function onKeyDown(e) {
+    if (!keys.has(e.code)) justPressed.add(e.code);
+    keys.add(e.code);
   }
 
-  function consumeRestart() {
-    const v = state.restart;
-    state.restart = false;
-    return v;
+  function onKeyUp(e) {
+    keys.delete(e.code);
   }
 
-  return { state, setKey, consumeRestart };
-}
+  function attach(target = window) {
+    target.addEventListener('keydown', onKeyDown);
+    target.addEventListener('keyup', onKeyUp);
+  }
 
-export function attachKeyboard(input, target = window) {
-  function onDown(e) {
-    input.setKey(e.code, true);
+  function detach(target = window) {
+    target.removeEventListener('keydown', onKeyDown);
+    target.removeEventListener('keyup', onKeyUp);
   }
-  function onUp(e) {
-    input.setKey(e.code, false);
+
+  function reset() {
+    keys.clear();
+    justPressed.clear();
   }
-  target.addEventListener("keydown", onDown);
-  target.addEventListener("keyup", onUp);
-  return () => {
-    target.removeEventListener("keydown", onDown);
-    target.removeEventListener("keyup", onUp);
-  };
+
+  function poll() {
+    const input = {
+      forward: keys.has('KeyW') || keys.has('ArrowUp'),
+      back: keys.has('KeyS') || keys.has('ArrowDown'),
+      strafeLeft: keys.has('KeyA'),
+      strafeRight: keys.has('KeyD'),
+      turnLeft: keys.has('ArrowLeft') || keys.has('KeyQ'),
+      turnRight: keys.has('ArrowRight') || keys.has('KeyE'),
+      startPressed: justPressed.has('Enter'),
+      pausePressed: justPressed.has('Escape') || justPressed.has('KeyP'),
+      resetPressed: justPressed.has('KeyR'),
+      mutePressed: justPressed.has('KeyM'),
+      shootPressed: justPressed.has('Space')
+    };
+
+    justPressed.clear();
+    return input;
+  }
+
+  function pressVirtual(code) {
+    // For UI buttons (Start/Resume) in a deterministic way.
+    justPressed.add(code);
+  }
+
+  return { attach, detach, reset, poll, pressVirtual };
 }

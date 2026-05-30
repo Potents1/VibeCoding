@@ -7,20 +7,18 @@
 - Overall Passed: `True`
 
 ## Files
-- `index.html`
 - `package.json`
+- `index.html`
+- `rng.js`
 - `game.js`
-- `input.js`
-- `logic.js`
+- `render.js`
 - `main.js`
-- `map.js`
+- `game.test.js`
+- `logic.js`
 - `physics.js`
 - `world.js`
-- `assets.js`
 - `raycaster.js`
 - `renderer.js`
-- `map1.js`
-- `collision.js`
 - `gameState.js`
 - `styles.css`
 
