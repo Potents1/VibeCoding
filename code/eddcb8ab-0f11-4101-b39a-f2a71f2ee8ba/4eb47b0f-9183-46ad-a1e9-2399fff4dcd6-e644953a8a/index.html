@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Signal Runner</title>
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body>
+    <main class="shell" aria-label="Signal Runner">
+      <section class="hud" aria-live="polite">
+        <div>
+          <span class="label">Signal Runner</span>
+          <div id="status">Collect every charge and reach the uplink.</div>
+        </div>
+        <div class="stats" aria-label="Run stats">
+          <span id="charge-count">0 / 3</span>
+          <span id="move-count">0 moves</span>
+        </div>
+      </section>
+
+      <canvas id="game-canvas" width="672" height="576" aria-label="Maze game board"></canvas>
+
+      <section class="controls" aria-label="Movement controls">
+        <button type="button" data-dir="left" aria-label="Move left">Left</button>
+        <button type="button" data-dir="up" aria-label="Move up">Up</button>
+        <button type="button" data-dir="down" aria-label="Move down">Down</button>
+        <button type="button" data-dir="right" aria-label="Move right">Right</button>
+        <button type="button" id="reset">Reset</button>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
