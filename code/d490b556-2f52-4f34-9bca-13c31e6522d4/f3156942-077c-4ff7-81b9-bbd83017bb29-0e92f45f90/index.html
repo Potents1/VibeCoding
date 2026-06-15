@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Browser Chess Game</title>
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+  <main id="game-container">
+    <h1>Browser Chess Game</h1>
+    <div id="board"></div>
+    <canvas id="game-canvas" width="640" height="720"></canvas>
+    <div id="status" aria-live="polite" role="status"></div>
+    <button id="newGameBtn" type="button">Restart</button>
+      <label for="aiDepth">Ai Depth<input id="aiDepth" type="number" min="1" max="5" value="3" /></label>
+      <div id="notation" class="notation" aria-live="polite"></div>
+      <label for="playBlackAI"><input id="playBlackAI" type="checkbox" checked /> Play Black Ai</label>
+      <label for="playWhiteAI"><input id="playWhiteAI" type="checkbox" /> Play White Ai</label>
+  </main>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
