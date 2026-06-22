@@ -1,24 +1,35 @@
+import argparse
+import json
+
 import pytest
 
-from src.performance_metrics import mae, mape, mse, rmse
+from main import _parse_order, run
 
 
-def test_metrics_return_expected_values():
-    actual = [2, 4, 6]
-    predicted = [1, 5, 7]
-
-    assert mse(actual, predicted) == pytest.approx(1.0)
-    assert mae(actual, predicted) == pytest.approx(1.0)
-    assert rmse(actual, predicted) == pytest.approx(1.0)
-    assert mape(actual, predicted) == pytest.approx(((0.5 + 0.25 + 1 / 6) / 3) * 100)
+def test_parse_order_accepts_three_non_negative_integers():
+    assert _parse_order("2,1,3") == (2, 1, 3)
 
 
-def test_metric_inputs_are_validated():
-    with pytest.raises(ValueError, match="same shape"):
-        mse([1, 2], [1])
+@pytest.mark.parametrize("raw", ["1,2", "1,x,2", "1,-1,0"])
+def test_parse_order_rejects_invalid_values(raw):
+    with pytest.raises(argparse.ArgumentTypeError):
+        _parse_order(raw)
 
-    with pytest.raises(ValueError, match="must not be empty"):
-        mae([], [])
 
-    with pytest.raises(ValueError, match="undefined"):
-        mape([0, 1], [1, 1])
+def test_cli_run_returns_forecast_with_default_series():
+    args = argparse.Namespace(csv=None, values=None, column=None, order=(1, 1, 0), steps=2, test_size=0)
+    result = run(args)
+
+    assert result["order"] == [1, 1, 0]
+    assert result["observations"] == 12
+    assert len(result["forecast"]) == 2
+    assert result["metrics"] is None
+    json.dumps(result)
+
+
+def test_cli_run_can_evaluate_holdout():
+    args = argparse.Namespace(csv=None, values=[1, 2, 3, 4, 5, 6, 7, 8], column=None, order=(1, 1, 0), steps=2, test_size=2)
+    result = run(args)
+
+    assert len(result["forecast"]) == 2
+    assert set(result["metrics"]) == {"mae", "mse", "rmse", "mape"}

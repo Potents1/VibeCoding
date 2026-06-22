@@ -16,22 +16,7 @@
 - `conftest.py`
 - `pytest.ini`
 - `forecast.csv`
-- `.gitignore`
-- `CACHEDIR.TAG`
 - `__init__.py`
-- `main.cpython-312.pyc`
-- `lastfailed`
-- `nodeids`
-- `stepwise`
-- `arima_model.cpython-310.pyc`
-- `arima_model.cpython-312.pyc`
-- `performance_metrics.cpython-310.pyc`
-- `performance_metrics.cpython-312.pyc`
-- `__init__.cpython-310.pyc`
-- `__init__.cpython-312.pyc`
-- `conftest.cpython-312-pytest-7.4.4.pyc`
-- `test_arima.cpython-312-pytest-7.4.4.pyc`
-- `test_arima_model.cpython-312-pytest-7.4.4.pyc`
 
 ## Commands
 - Profile: `python` (plan_run_command)
