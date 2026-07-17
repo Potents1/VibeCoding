@@ -1,0 +1,1297 @@
+{
+  "goal_id": "ed3b3819-817d-4b6e-b005-cc7e46005197",
+  "artifact_type": "static_browser_game",
+  "implementation_summary": "Implemented in workspace. Artifact list and validation command metadata.",
+  "external_sources": [
+    {
+      "name": "LAB textures",
+      "source_url": "https://opengameart.org/content/lab-textures",
+      "license": "CC0",
+      "source_type": "texture_pack",
+      "verification_note": "OpenGameArt listing shows License(s): CC0."
+    },
+    {
+      "name": "ugly 64x64 texture+sprites pack",
+      "source_url": "https://opengameart.org/content/ugly-64x64-texturesprites-pack",
+      "license": "CC0",
+      "source_type": "texture_and_sprite_pack",
+      "verification_note": "OpenGameArt listing shows License(s): CC0."
+    },
+    {
+      "name": "Old school fps wall textures",
+      "source_url": "https://opengameart.org/content/old-school-fps-wall-textures",
+      "license": "CC0",
+      "source_type": "wall_texture_pack",
+      "verification_note": "OpenGameArt listing shows License(s): CC0 and not required attribution notice."
+    }
+  ],
+  "verification": {
+    "primitive_id": "verify_external_state",
+    "verified_at": "2026-07-17T12:52:22Z",
+    "verified_by": "codex",
+    "status": "validated_external_assets_downloaded",
+    "fetch_primitive_id": "fetch_external_asset",
+    "usage_status": "downloaded_assets_wired_to_runtime_ui"
+  },
+  "downloaded_assets": [
+    {
+      "source_url": "https://opengameart.org/content/lab-textures",
+      "download_url": "https://opengameart.org/sites/default/files/labtexture_preview.png",
+      "license": "CC0",
+      "asset_dir": "assets/external/lab-textures",
+      "archive_path": "assets/external/lab-textures/labtexture_preview.png",
+      "extracted_files": [],
+      "checksums": [
+        {
+          "path": "assets/external/lab-textures/labtexture_preview.png",
+          "sha256": "233c3e1669655b6f0ec095e12643acf70cd89a356d3eeb99f63833fd236f2a1a",
+          "bytes": 34458
+        }
+      ]
+    },
+    {
+      "source_url": "https://opengameart.org/content/ugly-64x64-texturesprites-pack",
+      "download_url": "https://opengameart.org/sites/default/files/megagif1.jpg",
+      "license": "CC0",
+      "asset_dir": "assets/external/ugly-64x64-texture-sprites-pack",
+      "archive_path": "assets/external/ugly-64x64-texture-sprites-pack/megagif1.jpg",
+      "extracted_files": [],
+      "checksums": [
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/megagif1.jpg",
+          "sha256": "3b84b85dd41e804022a02149689f5889ecde7b97da8f07467b27914dd740ab0a",
+          "bytes": 7953
+        }
+      ]
+    },
+    {
+      "source_url": "https://opengameart.org/content/old-school-fps-wall-textures",
+      "download_url": "https://opengameart.org/sites/default/files/preview_1366.png",
+      "license": "CC0",
+      "asset_dir": "assets/external/old-school-fps-wall-textures",
+      "archive_path": "assets/external/old-school-fps-wall-textures/preview_1366.png",
+      "extracted_files": [],
+      "checksums": [
+        {
+          "path": "assets/external/old-school-fps-wall-textures/preview_1366.png",
+          "sha256": "5a1bcf5dcc514bd4be3e7b3af67f05592c5aceaa097f511b63afcb538abacc39",
+          "bytes": 87276
+        }
+      ]
+    },
+    {
+      "source_url": "https://opengameart.org/content/lab-textures",
+      "download_url": "https://opengameart.org/sites/default/files/lab_texture.zip",
+      "license": "CC0",
+      "asset_dir": "assets/external/lab-textures",
+      "archive_path": "assets/external/lab-textures/lab_texture.zip",
+      "extracted_files": [
+        "assets/external/lab-textures/extracted/LAB/readme.txt",
+        "assets/external/lab-textures/extracted/LAB/door/door0.png",
+        "assets/external/lab-textures/extracted/LAB/door/door_blue.png",
+        "assets/external/lab-textures/extracted/LAB/door/door_green.png",
+        "assets/external/lab-textures/extracted/LAB/door/door_red.png",
+        "assets/external/lab-textures/extracted/LAB/door/door_surp.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile000.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile050.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile051.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile065.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile066.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile067.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile068.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile069.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile070.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile071.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile072.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile073.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile074.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile075.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile076.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile077.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile078.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile079.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile080.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile081.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile082.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile083.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile084.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile085.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile086.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile087.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile088.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile089.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile090.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile091.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile092.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile093.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile094.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile095.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile096.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile097.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile098.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile099.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile100.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile101.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile102.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile103.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile104.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile105.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile106.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile107.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile108.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile109.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile110.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile111.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile112.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile113.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile115.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile116.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile117.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile118.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile119.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile120.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile121.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile122.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile123.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile124.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile125.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile126.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile127.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile128.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile129.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile130.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile131.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile132.png",
+        "assets/external/lab-textures/extracted/LAB/wall/tile133.png"
+      ],
+      "checksums": [
+        {
+          "path": "assets/external/lab-textures/lab_texture.zip",
+          "sha256": "c3230bbebbbc1c339a9ebda241c6dc8ffa0b28ba1ba2930bb561d0e193084eb2",
+          "bytes": 85771
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/readme.txt",
+          "sha256": "fb917ad24658278e106397e8dedd01c8c7e202209a861d000ebd28bf16d1c11e",
+          "bytes": 352
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/door/door0.png",
+          "sha256": "82fd42c8975e0fcb98e4713178a022f0d50395c55dcfa17f07d61fa37ffd2a89",
+          "bytes": 712
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/door/door_blue.png",
+          "sha256": "61f7c6f061dc50177a6d91c3c2aa7c4c4ec314037e091a5002a74bc849463614",
+          "bytes": 680
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/door/door_green.png",
+          "sha256": "e7f68ab0f9472aac2125c55cf71611189221414777f7f054dcdd65d3b8f95e0b",
+          "bytes": 685
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/door/door_red.png",
+          "sha256": "82c02127132736151d4d191a09ce8c1c4b8030b2582d27d32ca583b866cbe1b1",
+          "bytes": 675
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/door/door_surp.png",
+          "sha256": "2b31deb17bef78b0df8b816101f905968dc9adf40d0b0146cb5944fec2549c32",
+          "bytes": 453
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile000.png",
+          "sha256": "d32510af9a4b82ef1c279209672bab953faacd2f1ba3b7e73f860e57b4903785",
+          "bytes": 4579
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile050.png",
+          "sha256": "d5347a8477282cdd74baef2c314064bc7e4a5b5de5f329ae7b7dc5dd1ee73cfb",
+          "bytes": 464
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile051.png",
+          "sha256": "5808b7e028984f180f4e3df63991555fc45bd5c935490830e188a8584bc2b017",
+          "bytes": 410
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile065.png",
+          "sha256": "4aa693b5af9a068e451a5d1b4b0fab2b19e85956dccb87c81395756979b60f07",
+          "bytes": 1179
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile066.png",
+          "sha256": "d613c4c8e189e04f42491ee8722ca5b7193124327abeb02885b020c7a90ba460",
+          "bytes": 687
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile067.png",
+          "sha256": "f2c3d0bc10ae470a90c227f2ba5661ae9bba4cda6464e3393ab722420e20ad9a",
+          "bytes": 874
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile068.png",
+          "sha256": "c815a855c2f7f6d92a978bcb07f22a84b2efcab049cad3d9ad17366453452de3",
+          "bytes": 876
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile069.png",
+          "sha256": "08412da78195bfc5285cad7ebe145272e97cae12b7a07fe75fbb5bb2325adb1f",
+          "bytes": 900
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile070.png",
+          "sha256": "9fa220fbbe39fee33b0d8abd53adbf13ea4493f9ed2296df6727d583b9ed5055",
+          "bytes": 858
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile071.png",
+          "sha256": "202779e1ce7fed555bfcf6c2f9e1fcbd73a34e9f92fbe9f01ad4fee00a031c1e",
+          "bytes": 581
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile072.png",
+          "sha256": "7d31046d244eaae70b574fed26e1a67675b2f52a0edd8aaab3b359622a03b8b8",
+          "bytes": 1140
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile073.png",
+          "sha256": "f902eb7d190ad206eea00577caab58427730fb0f306148649d5541b34b86d7b8",
+          "bytes": 806
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile074.png",
+          "sha256": "4f2e1dc11e86817ec281c1ec037833641f9ce9ad9f585d4e94b8deac6bdb9569",
+          "bytes": 846
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile075.png",
+          "sha256": "68cdbb9767e38d1ebf4dc7de5f14e33ebf9eb9ae106fac04bcf9bff3fe5cfe6c",
+          "bytes": 6031
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile076.png",
+          "sha256": "3d89f4950d84ddb48d48d20a0296b230afb65cf0c0ce6c403e2b0474f0102696",
+          "bytes": 770
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile077.png",
+          "sha256": "85f15237f19b92f8c8e7809582ac679bedc640d32d9dbd4a6c671501ccb3b1ec",
+          "bytes": 434
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile078.png",
+          "sha256": "cfb3c5b07cf6ca83b89920ac549adb683c8b60de49c4177aae37da7d664be9c4",
+          "bytes": 824
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile079.png",
+          "sha256": "fc5faa80ec90fc83ed639b9cf99bff8c83341f21b1a98601e1d77f8549f9c427",
+          "bytes": 521
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile080.png",
+          "sha256": "778ebb966de45a849f889df6645e1fd61b22a7c48a8792d965de49946d82a73c",
+          "bytes": 524
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile081.png",
+          "sha256": "5cccbf1736c254950782079d6b57d063eb0cb36d221f7e0edde4ef2ae62a0055",
+          "bytes": 469
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile082.png",
+          "sha256": "a62faba8a7b64aca1cd025756ded6c87c28473842f661e83f4aaa1334e486464",
+          "bytes": 1486
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile083.png",
+          "sha256": "9ebcac45f7e4354707b806f44e278e5f25614e2af2ca9e5a8f7e8c4142ae43e6",
+          "bytes": 590
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile084.png",
+          "sha256": "c1950585486d03fe93845168ec6365c96d6174e64b94e21f5bdd565c6d17c56f",
+          "bytes": 299
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile085.png",
+          "sha256": "40166c77a74f439727da8cff62bba31917f76c253ab38b9146cf35217cbc2c79",
+          "bytes": 649
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile086.png",
+          "sha256": "e1c25b0614f67c27938193750184b2975cf5ea379c420ea45635772bc9c85c1a",
+          "bytes": 360
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile087.png",
+          "sha256": "50f322afdf8a71aea22c59fa99e6789ac01cc0a9b7001167bfd4aa189491071a",
+          "bytes": 556
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile088.png",
+          "sha256": "44974715de83fa995609a48fada4a523cdf9b0c4bbebb42fa6851081c142adc0",
+          "bytes": 476
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile089.png",
+          "sha256": "9d4a83aeb6aa92a887b646fa5fd07ea11ac081fee6f9be2fc277a92ce77056eb",
+          "bytes": 1887
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile090.png",
+          "sha256": "3f84242fd2cc6a9d377e43d44045832c5571a20c1294ce1c9bfe0d8aa72db271",
+          "bytes": 1800
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile091.png",
+          "sha256": "6d9876b84cf24f289d15297c4066c12e3866252613f027d4bbd3b3a3e0576a19",
+          "bytes": 1786
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile092.png",
+          "sha256": "beb52f6beb24de44df53d8a12f997bec7fdcd5bbaa67140802d530891f8b1c0a",
+          "bytes": 7006
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile093.png",
+          "sha256": "0b537f004d31a399ec82165b88d8c46a9206ed347d5aa13d631f67881c700274",
+          "bytes": 192
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile094.png",
+          "sha256": "bad94e09294c9c489b11786028dcbc1e1702211cb74f9a604203ccf817032596",
+          "bytes": 296
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile095.png",
+          "sha256": "8209a9482820dec6414158dc81e5b73617aa25e8d723450272afec37617e74ed",
+          "bytes": 269
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile096.png",
+          "sha256": "0b537f004d31a399ec82165b88d8c46a9206ed347d5aa13d631f67881c700274",
+          "bytes": 192
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile097.png",
+          "sha256": "aa3ddcf49ce307f0ee057bcddb71c694cc6aa4233c10de35f32e9e3c19d59df8",
+          "bytes": 276
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile098.png",
+          "sha256": "bacb8aeae9e46aadfb15dc5e975929f4f4a1da6dfd715c917b683f692e3ee19e",
+          "bytes": 208
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile099.png",
+          "sha256": "8d6e1a123b8abc388fbf942e709d746afd132f791230d5ab94c0c5a731e9d4e0",
+          "bytes": 3026
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile100.png",
+          "sha256": "486bbfc32a91f61ce73613db6208d94d1311db8c0ba337ae04dafa9fd073f98d",
+          "bytes": 230
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile101.png",
+          "sha256": "08f619bd95f51e3738e22c492ebcdcbeed72714137258446fc2822e56cc0a65e",
+          "bytes": 321
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile102.png",
+          "sha256": "ad0445f88a235769185a4e682f2cf69cde4c07c1b221bef3bb3e44f83b01166d",
+          "bytes": 406
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile103.png",
+          "sha256": "9d03a0445c2714420c1f5a71acce999fea89c68720b32b13258f29968bc5f8aa",
+          "bytes": 228
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile104.png",
+          "sha256": "437a23d968eb0964bea2e195c8323fc1adab04bb3a94ba4c9ece2d6bbc9079df",
+          "bytes": 322
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile105.png",
+          "sha256": "5044d5706bbb752c3bce86a4386015d892909f8860b94f2e7e1f79f7016cda50",
+          "bytes": 2674
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile106.png",
+          "sha256": "d85897e47d51e42e86ebc11d2cecd22d71076bf03fe5a4e8c2b3eabb8049d3ca",
+          "bytes": 2606
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile107.png",
+          "sha256": "3372849330b6cdde7dddddee10841af81feb2502f601bf293921bf94c37049ab",
+          "bytes": 835
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile108.png",
+          "sha256": "f8a792d6d86d870f50d3d47fe9e9f89be3211df540c94bcc285a9a194931a1c3",
+          "bytes": 1820
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile109.png",
+          "sha256": "711c2a4fb1bbf078973ceb25714a92f1a45927547f26febe814f548530648ccf",
+          "bytes": 1739
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile110.png",
+          "sha256": "f9d88814bc602f6266c74f3740779b2fd629195f1e8106b871fdbe0bf1a87786",
+          "bytes": 1180
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile111.png",
+          "sha256": "d826d46e34c39da0452d2711306af5723f6167a9ec52b348e6d3ef30772eb1ce",
+          "bytes": 287
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile112.png",
+          "sha256": "aa3ddcf49ce307f0ee057bcddb71c694cc6aa4233c10de35f32e9e3c19d59df8",
+          "bytes": 276
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile113.png",
+          "sha256": "3bc972df77333074bceeb0cee611934eb57748a5ee2a1d49e4639434cf25dcf7",
+          "bytes": 552
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile115.png",
+          "sha256": "6cfab23ac366c8b145a62926dc101eeefaa41cc6a074f5b5e91fadc0c6028307",
+          "bytes": 3520
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile116.png",
+          "sha256": "219f17faa1d8a69038fd1e23456393a0a2defc670feb9b7dbd942043d302a8a4",
+          "bytes": 299
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile117.png",
+          "sha256": "bb73820a343ec445965aa75ab16def037ab87314115e0c359ce2c6e2a845f4ba",
+          "bytes": 355
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile118.png",
+          "sha256": "ff5a968d44305df83ef849cfcd93af14c972ba5508de673678f8a67779731ee3",
+          "bytes": 1242
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile119.png",
+          "sha256": "68ad725b089abcacb060da94443051c6d158e351beabea3251466891b4f7eb80",
+          "bytes": 345
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile120.png",
+          "sha256": "eb348b7d3561df77d81938395d00d42b9946d9ab2d9565228549d176116fd372",
+          "bytes": 526
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile121.png",
+          "sha256": "cbf3f7e1034ed345b8be393b0176b6a2a379aca9987b69209d00e7a3885489b0",
+          "bytes": 293
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile122.png",
+          "sha256": "436bd106f38023ad2d72c0c181fae3172d1b7f4b3636489964db9479f09bbee9",
+          "bytes": 383
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile123.png",
+          "sha256": "3543bff4870b0db791a537aa71396b55d02b75ae2150b19f35ee7b895b66f98c",
+          "bytes": 279
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile124.png",
+          "sha256": "bdc16c3d7b13b2a7acf3a6ebd18dd7e6704f0e995e3f9c8f1ac387ef25c1f2d5",
+          "bytes": 1099
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile125.png",
+          "sha256": "cc2881a98c338bfff74d3e72b7c313e5c9395a8f907a5e78eb5bb09f6820d58c",
+          "bytes": 433
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile126.png",
+          "sha256": "8a13bc2ede99e58fdb2f80af0565aa8ab43c95d3f99bb90ddc9b7a68f0c5e50d",
+          "bytes": 1325
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile127.png",
+          "sha256": "e034b01fcaed87a2f94c4a89c5edd91cec73c7d09c8f026e4bbde44456fc05fc",
+          "bytes": 1346
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile128.png",
+          "sha256": "92d74313d0309d4930860e10ad3932425adc8def38d60060224e0ca1423e47e1",
+          "bytes": 434
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile129.png",
+          "sha256": "7857cba2b1aeffbf70c4acf4eeef93db746a89d888bc18aa073e490087e7cd95",
+          "bytes": 1482
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile130.png",
+          "sha256": "d3a9f89f0197649284e8e8a23203a2d8eeea28c710b6d3ed1834aa0729b13142",
+          "bytes": 451
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile131.png",
+          "sha256": "534883e41ed29a9460694e7a92b0bff55f2e26f6128ea5a9681113e92a6e7667",
+          "bytes": 357
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile132.png",
+          "sha256": "4d1b19bb85215d822e2d05a63ee182ee37af7d4ca840b2e3527b6ce1a630a620",
+          "bytes": 228
+        },
+        {
+          "path": "assets/external/lab-textures/extracted/LAB/wall/tile133.png",
+          "sha256": "f899c000bcf6cdc8639b54e7d0a0ccda6e745cb91ead972db99082aa9258c51d",
+          "bytes": 491
+        }
+      ]
+    },
+    {
+      "source_url": "https://opengameart.org/content/ugly-64x64-texturesprites-pack",
+      "download_url": "https://opengameart.org/sites/default/files/pack_0.zip",
+      "license": "CC0",
+      "asset_dir": "assets/external/ugly-64x64-texture-sprites-pack",
+      "archive_path": "assets/external/ugly-64x64-texture-sprites-pack/pack_0.zip",
+      "extracted_files": [
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/altar.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/altar2.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/altar3.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/ceiling.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/door.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/floor.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/pillar.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/secret.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/secret2.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/secret3.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/wall1.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/wall2.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/wall3.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/ceiling.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead2.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead3.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead4.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead5.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/door.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/floor.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/satanhead.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/wall1.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/wall2.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/wall3.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril1.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril2.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril3.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril4.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril5.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/ceiling.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/door.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/floor.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/wall1.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/wall2.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/wall3.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/ammo.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/exit.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/food.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/gun.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/key.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/masse.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/skullgun.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/camp.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/camp2.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/camp3.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/ceiling.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/door.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/floor.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/pillar.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/trash.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/trash2.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/trash4.png",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall1.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall2.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall3.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall4.bmp",
+        "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall5.bmp"
+      ],
+      "checksums": [
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/pack_0.zip",
+          "sha256": "81d890d1b764c67bb3e3daf69102351ae03ed870ee9dabe2f1ed224227c45a50",
+          "bytes": 451916
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/altar.png",
+          "sha256": "9efddc849401dac43e0e0cebed1afe52261ab7e3382e418f7a4a1578d57d4e9a",
+          "bytes": 9708
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/altar2.png",
+          "sha256": "126998c32bb50b286fa1ac6c3d79678b8273cabd880bbf5d4577b58da52e5182",
+          "bytes": 11098
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/altar3.png",
+          "sha256": "db6981fa7d0a599d1c5897aa2ccaf8f0a70e8f41f8dbced9d11d9aadd3a382df",
+          "bytes": 7507
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/ceiling.bmp",
+          "sha256": "4a7bb9265fefc0b4097db21b3782b5db93f814feae610a5a74de3920d7991109",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/door.bmp",
+          "sha256": "0f3c498cae62ba89f47c4d66388e63e7a5a2c89423f6e2461b73d54f046b4362",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/floor.bmp",
+          "sha256": "b38486fef7bab705f8f97c2951db4f37bdfd353a3138d9b53b5e252b3169f3e3",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/pillar.png",
+          "sha256": "a339a6253c4b96d9f391a5f4c05769eadb40d3edef100bedbe1b104705453d74",
+          "bytes": 8330
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/secret.png",
+          "sha256": "4e805c26e0c191ba9d984fdbb0830ac433e012216a4fd13b306cafd421905afe",
+          "bytes": 9569
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/secret2.png",
+          "sha256": "c58f46ab36ed42f37f996b8541932e425656cc8f7ac7587231ab40822c5e40ef",
+          "bytes": 7750
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/secret3.png",
+          "sha256": "f3be7995497b5246456a3c74430d44055ec51a4fbc8fb63ed7361467fb51dd69",
+          "bytes": 5913
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/wall1.bmp",
+          "sha256": "993c357c60f2db659c8046479b7a102c18603c3d6d41ccfd13fcdf09fa43a6ec",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/wall2.bmp",
+          "sha256": "8c72b90ebae02f518934c34bb7bbb075cc0a144f2d9a7234163f54768b4d5dc0",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/wall3.bmp",
+          "sha256": "7a6ab9962c1d48e74578733e9b149d10fa84974b3f1afe483d3d2189680db1fd",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/ceiling.bmp",
+          "sha256": "05fd64704648126abd0fc8d9b239dbc9ed63c1208b362dfb29e4906d3736f24b",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead.png",
+          "sha256": "38ad6dc946df13ba945ca9a73cd9d9804883bf1118b303e63c80f4f889fadcfe",
+          "bytes": 6555
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead2.png",
+          "sha256": "338511341d9c1d390c9cf01a21b44f1c0f1164113d7e08fcb8131614cdc44911",
+          "bytes": 6386
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead3.png",
+          "sha256": "33c55441acbb084fca690e8b737830dc3119289241d704285eda545440eeec24",
+          "bytes": 6122
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead4.png",
+          "sha256": "6cfeafe8fe6a2ee7ee3b3c55b3769f706b2fc769130b020ac22d5de251a83124",
+          "bytes": 5746
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/dead5.png",
+          "sha256": "623e8698fd2bbdec70ce62e639778db7de6948109bd6a6676c1e1cff5b5fe185",
+          "bytes": 5409
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/door.bmp",
+          "sha256": "a09b05abb7eef40eb23e40b9ebe6a1760c74fbf989820f78d624c402e218fe37",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/floor.bmp",
+          "sha256": "be2e7d3af56983f4577b97ec0dd9c8e539a8c25dfe9999b0c79bbf50c64f53d8",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/satanhead.png",
+          "sha256": "e31898958427127dc99b5e1adfe93d4b096fb9ffa4e71211083797a8c041bf34",
+          "bytes": 9837
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/wall1.bmp",
+          "sha256": "9ff3510f01251b7f19b6e31c8410f71834c904c7ab96be477805e6bd5246dadf",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/wall2.bmp",
+          "sha256": "e03c7ae6c8c863d32f1918ff6187627da09afa7ffacdbddf8b34143cc3601c77",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/hell/wall3.bmp",
+          "sha256": "6514b67ee4db9cacbae7623f1c78e5af63b8ddd4b522b75bed7fa12ea710ef63",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril1.png",
+          "sha256": "50b195c4808ab3881bfc281288e2c905f661a8d0a791a2122b95502ae99d79d0",
+          "bytes": 5870
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril2.png",
+          "sha256": "9dcd963997e09fb69ad0ac8cf6fcf825ca1b5a699ff402f3321202a905ab5ba8",
+          "bytes": 5902
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril3.png",
+          "sha256": "04b15b36d3a47d3d4df350de0fe7d1a2fa1e53b4281be2a5e16fb23b9ce71a59",
+          "bytes": 6084
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril4.png",
+          "sha256": "ec423bf16038e513f6729c46f775da169607ea3be496204a7930a60c5881f64a",
+          "bytes": 5880
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/barril5.png",
+          "sha256": "a2c0a1e927ed47f60a3d03214f192d2fa7f06ef03d5ef0df1351fb158adebb2d",
+          "bytes": 5023
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/ceiling.bmp",
+          "sha256": "45193ed0f2437eb159fe63f97a123831d037325e179896d4407ade22abaa130c",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/door.bmp",
+          "sha256": "a0d3ad76f2410c945a55224841a21950690ac785d89c89ca8159b2724cfa277c",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/floor.bmp",
+          "sha256": "a7be19b34ec96ddefd4cf110599cbc6311f5b44f094b739fadc0b9bb373e69db",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/wall1.bmp",
+          "sha256": "218d8f013f821ce33397ead1c5a9976a670cabf8237c4405bd40c3c1b35573d9",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/wall2.bmp",
+          "sha256": "a2f92af2dadaf2b59fabe1bc25c08ac5f806dc91d3f5846e79ab5d6a918ef230",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/nuklear/wall3.bmp",
+          "sha256": "e43504d29e0b5d5314d236d7e1fa012dbb958716a0f73c1f1c2ae3d6a97ba7d4",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/ammo.bmp",
+          "sha256": "1e6c593270f2515efb24b91971f9fe01b649966b4bbefd003d678d5a1439adbb",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/exit.bmp",
+          "sha256": "5884507e9bd2ee6fc5b59d977783ff5202e31286d6765ba07bd9dd2294ba66b6",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/food.bmp",
+          "sha256": "613a2ba04dd08462cd8667e0d499b025ea74b70830e8c3352bf2183c1a0d036c",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/gun.bmp",
+          "sha256": "5a25c712b800472220283eb879ab830c6f5e6ba9df710a523e14875bf5643485",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/key.bmp",
+          "sha256": "8699077b8a73022d71e497571c71ea7b0588b4e3b223a8ee2221ec99e6c092db",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/masse.png",
+          "sha256": "810bd6b4be116b6240c7363fe2529471265f4f907e48f05be96c9551820a45fb",
+          "bytes": 4804
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/skullgun.png",
+          "sha256": "ca4f69476cadafbdea57b469f89c6c4f7dd31c4b8d25c8dc53fcb993a88c9a9f",
+          "bytes": 8337
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/camp.png",
+          "sha256": "a2615c3de4ef23321aa01fd5ec94b51ab2e5a84b652cb4e58a5cf55c2cc15c5b",
+          "bytes": 10000
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/camp2.png",
+          "sha256": "4135c008c100a8398a6423b6f68e77acabc1be11c891d94f91841aec9b596fc0",
+          "bytes": 11873
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/camp3.png",
+          "sha256": "3686caba6a21286f7ca3d35fa7b578130ee18c8a1c1d9c8ec0ab6be76823df47",
+          "bytes": 8444
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/ceiling.bmp",
+          "sha256": "aa9a90536c91a92e047f0d4068e86c72262ebfbd59c27d6dc58663b0867a75a6",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/door.bmp",
+          "sha256": "aa1e3a58ff728962a08fc1e518a7f0863ba0bec3ebc649a50b128d812781adbb",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/floor.bmp",
+          "sha256": "e40f6ca5bb3a9afd52cebc99e69c73b908bc3cad5683b067c7255c45432f3393",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/pillar.bmp",
+          "sha256": "75c1155a386bdd0226c2f043ba39dc4e101b747ad461325209fc9c0ae9ad5617",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/trash.png",
+          "sha256": "92b00b5d56e36e25c6e3ebebf39145a5bbb552dceb3a88b09cbd7e84dc37488a",
+          "bytes": 7128
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/trash2.png",
+          "sha256": "9e830bcc6cdac0f9d1c22e8cf47cb0790da118d00489b761f60cb5ffc9f6784c",
+          "bytes": 8355
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/trash4.png",
+          "sha256": "04eb3b37e1f18b650da527429a4df8f4a9d88c3b56565b9f43b52dc9b6060f09",
+          "bytes": 6215
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall1.bmp",
+          "sha256": "445c5de3e3631644d2ec6943d807071cd879949ae03cfec2fe71377d4e7a28bc",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall2.bmp",
+          "sha256": "a80faeaab46df79adf75b4d2cf19d5f5c65e36d559ce128af9ac4531991efcef",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall3.bmp",
+          "sha256": "2f26f57c8b2123da6912e3726277ad0316eb7af86e2fac6feb29e86cf0b8b4d3",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall4.bmp",
+          "sha256": "d73fa4bc09fe10fdb7f20fbdcf4eb6903d4831eae6e50cfb8f5fc14a0f11ebff",
+          "bytes": 12342
+        },
+        {
+          "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/sewers/wall5.bmp",
+          "sha256": "715a3c22bffba7eeb462613207c24e01308fb6ba76749444e3ffbe3352ff2e2a",
+          "bytes": 12342
+        }
+      ]
+    },
+    {
+      "source_url": "https://opengameart.org/content/old-school-fps-wall-textures",
+      "download_url": "https://opengameart.org/sites/default/files/oldschool_fps_wall_textures.zip",
+      "license": "CC0",
+      "asset_dir": "assets/external/old-school-fps-wall-textures",
+      "archive_path": "assets/external/old-school-fps-wall-textures/oldschool_fps_wall_textures.zip",
+      "extracted_files": [
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick01.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick02.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick03.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick04.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick05.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick06.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick07.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick08.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed01.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed02.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed03.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed04.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed05.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed06.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors01.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors02.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors03.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors04.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors05.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors06.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors07.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors08.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors09.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors10.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Scenery/Scenery01.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Scenery/Scenery02.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone01.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone02.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone03.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone04.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone05.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone06.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone07.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone08.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone09.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone10.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone11.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles01.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles02.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles03.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles04.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles05.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles06.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles07.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles08.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles09.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles10.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles11.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood01.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood02.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood03.png",
+        "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood04.png"
+      ],
+      "checksums": [
+        {
+          "path": "assets/external/old-school-fps-wall-textures/oldschool_fps_wall_textures.zip",
+          "sha256": "6c82c020e6f859f6f6dc00141ce1fa30b3f666c809789014959f87d8c052391f",
+          "bytes": 273826
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick01.png",
+          "sha256": "fcadf882ff1f47e80d050c411e6c111e14511f2e13a3bf6376bc0923d59988d1",
+          "bytes": 4020
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick02.png",
+          "sha256": "93a6b66f3dca4ebcb2e5cf5bcef7726227fae97d1bd77a652ab04428dacb2198",
+          "bytes": 4251
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick03.png",
+          "sha256": "a7e3915e52e3aa9f13e88e85f41f63760ba80e3cf2c376821dabd27dda3ce3c3",
+          "bytes": 4642
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick04.png",
+          "sha256": "069fb0957453931af12ae9b1a785dc19cf351ea2850f9c6899d91393a41ab552",
+          "bytes": 3720
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick05.png",
+          "sha256": "76a11a88a737687a554b414c6edf805ec82ed43687e1f373382ad8b88e5846fb",
+          "bytes": 4633
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick06.png",
+          "sha256": "9f73e31d37ff87bc27eaf0af3eb6ff00d3ff6df75a28064b204c77dccc568910",
+          "bytes": 3691
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick07.png",
+          "sha256": "12005696b458f4c56d5f03126590353bee243e26994d4bc50f7ce1a0e77b516f",
+          "bytes": 4858
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Brick/Brick08.png",
+          "sha256": "4913ae1760a66807ca6d87516b4618733d1b41da67836f2e7f0daef962a37255",
+          "bytes": 5161
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed01.png",
+          "sha256": "f160c6ec3f0a9f839a7ba51feb26ad1276704bab2eee332a26b2e8c25edbd910",
+          "bytes": 4934
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed02.png",
+          "sha256": "f71276b20db3979432e561086f1fd7435dcf668607c745535695a765b9014b96",
+          "bytes": 4464
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed03.png",
+          "sha256": "dfff1c0cda6073a2420e2a2d81c70cbebad9dcdc67b6693bba2e034095ebd8d7",
+          "bytes": 8228
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed04.png",
+          "sha256": "b1e19a685552d304a7980bc3854c2b2115db3eacd7804a9ee3fc81ffe5e4a3be",
+          "bytes": 8880
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed05.png",
+          "sha256": "f0b22a9082699a453c9d57bc84d3c7c2337e799f1c38969a8b3068aa694a9d52",
+          "bytes": 8798
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Cursed/Cursed06.png",
+          "sha256": "511891490f70e3caee42ff921aa5e3db66eff602ef1e8ff55f25ab415693f200",
+          "bytes": 9207
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors01.png",
+          "sha256": "8ee399ff9191e638ff04b6e3dde22dbc651b72750a8c00d1c1b2ec0983215497",
+          "bytes": 6987
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors02.png",
+          "sha256": "b69a25a803fdbf208ecd9fa4b5a9033a7cc37ab3318e17b50841fb73a740251b",
+          "bytes": 3953
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors03.png",
+          "sha256": "5ae6a25128d8b02ff0b7f52b215792369accfc198b10bc84767faa39f6a37288",
+          "bytes": 3799
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors04.png",
+          "sha256": "724f1c7227895d1ee419f4f7c6bca6d8a269a98537a9561f87c19b1a70a33146",
+          "bytes": 3882
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors05.png",
+          "sha256": "91095e31b6040c3f1dc03cc3afcc0e496b1df770160efd2ade667c2425fa3a87",
+          "bytes": 1613
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors06.png",
+          "sha256": "e18618cf3ef67b3c3cec4fbea25a05fa303f24bfc84185b3f9ae18ddf38827b1",
+          "bytes": 7025
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors07.png",
+          "sha256": "8f4af60546df74beea7ac7f2ec71fb26460cf5649e5f9d307983b29eef711328",
+          "bytes": 6934
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors08.png",
+          "sha256": "203edf1fb1090d170aa0381fe9d68a73a8e535f3047213631ee7710f21cf3654",
+          "bytes": 4361
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors09.png",
+          "sha256": "509cdfebcb3e3d059724052be9bd008129c2b88822e59f66507fd437a667b53b",
+          "bytes": 4394
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Doors/Doors10.png",
+          "sha256": "7f7106b23ec84dcc90e4a66bad26c3e6a303e05977dff612e01c448e4e311803",
+          "bytes": 4402
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Scenery/Scenery01.png",
+          "sha256": "f5596c103649c0f4c56039f22fa9cccd38e1f436f89f47a0af9c2376a8715ae6",
+          "bytes": 2143
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Scenery/Scenery02.png",
+          "sha256": "d5d0582245297812f8509a0d3c7a5ae297e44c4bddb9d6a98860ae7961b00a22",
+          "bytes": 2153
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone01.png",
+          "sha256": "63ca349fa9063506cdfbb356d010c125d8b9bc9f25105b87ca4fa4878778aa42",
+          "bytes": 6710
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone02.png",
+          "sha256": "2794ec18596a53bc11f8927dd92a50a909ff4ffba1751e644204e8d48b1aa299",
+          "bytes": 7727
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone03.png",
+          "sha256": "963ca3405cd4522817308970ddbf7dc7dfbdd0fef0db9d36a30543d2db7e3afb",
+          "bytes": 5634
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone04.png",
+          "sha256": "05c925b9ac68e00de5025d47b85e2960312ad0491e455142773880d8e2cc5024",
+          "bytes": 4638
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone05.png",
+          "sha256": "a867a3f4ab5ed18b223ec8237242721903f3226ccbeec41e6dd904bdc9da4c10",
+          "bytes": 6343
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone06.png",
+          "sha256": "1696954b0679d22844e52f0d58139586ee80e773770e5e7473b2072fee7a5527",
+          "bytes": 9539
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone07.png",
+          "sha256": "58342e3ef21aa2419bf3a8e63956156010312e5c53d2bcfebb50b670df13c427",
+          "bytes": 8982
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone08.png",
+          "sha256": "006448d00cf15247fcb3c5c0f206b4fe7c5951f93f74ed990a1a4fd34c168e73",
+          "bytes": 8375
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone09.png",
+          "sha256": "638c4134b8954192b490a7c1513dbe1b92d8d1d3baa6a21f1baa93634c49cca4",
+          "bytes": 7385
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone10.png",
+          "sha256": "dd435f55c54e75851cab105f713b347bbc95a1020e8d9822578444e639e84925",
+          "bytes": 5050
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Stone/Stone11.png",
+          "sha256": "7fa6befa29f2e3e76740cb278fa0393f3f9ae3eb4573e27bd06977654f86262c",
+          "bytes": 4101
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles01.png",
+          "sha256": "44efcb38eb31bd3171a1ee4203ab9b6e2dba5379cdb3e87fd559ed73a8cc31b0",
+          "bytes": 3889
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles02.png",
+          "sha256": "ba001a7723150885d51d44a1b51b0427151c1d608247dc5ccc049c2c5278800b",
+          "bytes": 4445
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles03.png",
+          "sha256": "a2cf3f276a00c47eb2b756712d8d119929b473fcf0d21545f5e87ec47313926e",
+          "bytes": 4612
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles04.png",
+          "sha256": "e18d492fde3846d5dff76c47665f80f04d54abd2e79549f86f351ef89d0d444e",
+          "bytes": 4533
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles05.png",
+          "sha256": "b19e3cadd44c6ead0264ed1b7961f7e0e11de70ac4a7d6a7112060d6de368944",
+          "bytes": 4330
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles06.png",
+          "sha256": "08f6a60dd05fd30fd923fee5d94afad88b864309d362eb0cb2b28b6fadb615d8",
+          "bytes": 4130
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles07.png",
+          "sha256": "d46dbb4cf9d6c422d22a49595bf491196b9a625311ec01b115121a5df20aabce",
+          "bytes": 3945
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles08.png",
+          "sha256": "3d24ffb21e135fd8960bb1e910d61e2af68e47c095405bccf510e82fccf8e04c",
+          "bytes": 4778
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles09.png",
+          "sha256": "a0107116f40e2524731ca4e5ba6977c22349a2f4cec33c24dd522f7572154c88",
+          "bytes": 4456
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles10.png",
+          "sha256": "e73f26d7970ce2ef58bdbca01731679e18879c00f1a0f443952e3050a32688a2",
+          "bytes": 4991
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Tiles/Tiles11.png",
+          "sha256": "9edffe9237e3c934f0b532b6a99fce828ef07fe8dabcc6326b4f84acaa8ba63e",
+          "bytes": 6006
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood01.png",
+          "sha256": "43538ab6e6f94713445946ce3b95457a7721055ea8d81c314890e92adfc796c9",
+          "bytes": 2388
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood02.png",
+          "sha256": "e1fe99108b4bb80a63d3c4d0bb10d3513ae6904263e3246dc9c3b7da71c7f67e",
+          "bytes": 4241
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood03.png",
+          "sha256": "d6fa227c43634d3f776428880d75825de44caa186084d28aee34813e912c234d",
+          "bytes": 3430
+        },
+        {
+          "path": "assets/external/old-school-fps-wall-textures/extracted/Wood/Wood04.png",
+          "sha256": "ef4563a247cc04fd57c39e60dcf63f537f0668b1ec463ebe4fc7cac3ff1659c5",
+          "bytes": 2603
+        }
+      ]
+    }
+  ],
+  "external_asset_policy": {
+    "allowed_domains": [
+      "opengameart.org",
+      "kenney.nl",
+      "www.kenney.nl"
+    ],
+    "allowed_licenses": [
+      "CC0",
+      "CC0-1.0"
+    ],
+    "verified_at": "2026-07-17T12:52:22Z"
+  },
+  "used_external_assets": [
+    {
+      "path": "assets/external/lab-textures/extracted/LAB/wall/tile065.png",
+      "used_by_files": [
+        "src/main.js"
+      ]
+    },
+    {
+      "path": "assets/external/lab-textures/extracted/LAB/door/door_blue.png",
+      "used_by_files": [
+        "src/main.js"
+      ]
+    },
+    {
+      "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/floor.bmp",
+      "used_by_files": [
+        "src/main.js"
+      ]
+    },
+    {
+      "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/donjon/ceiling.bmp",
+      "used_by_files": [
+        "src/main.js"
+      ]
+    },
+    {
+      "path": "assets/external/ugly-64x64-texture-sprites-pack/extracted/object/skullgun.png",
+      "used_by_files": [
+        "src/main.js"
+      ]
+    }
+  ]
+}
