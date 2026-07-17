@@ -53,23 +53,45 @@ jobs:
           echo "artifact_name=${artifact_name}" >> "$GITHUB_OUTPUT"
 
       - name: Assemble package
-        shell: bash
+        shell: python
         run: |
-          mkdir -p dist/package
-          rsync -av \
-            --exclude ".git" \
-            --exclude ".github" \
-            --exclude "venv" \
-            --exclude "agent-dashboard/node_modules" \
-            --exclude "__pycache__" \
-            --exclude ".pytest_cache" \
-            --exclude ".ruff_cache" \
-            --exclude "*.pyc" \
-            --exclude "logs/*" \
-            --exclude "data/*.db" \
-            ./ dist/package/
-          cd dist/package
-          zip -r "../${{ steps.meta.outputs.artifact_name }}.zip" .
+          from pathlib import Path
+          import shutil
+
+          root = Path.cwd()
+          dist = root / "dist"
+          package = dist / "package"
+          archive_base = dist / "${{ steps.meta.outputs.artifact_name }}"
+
+          if package.exists():
+              shutil.rmtree(package)
+          package.mkdir(parents=True)
+
+          ignored_dirs = {".git", ".github", "venv", "__pycache__", ".pytest_cache", ".ruff_cache", "node_modules"}
+          ignored_files = {".pyc"}
+          ignored_path_prefixes = {Path("logs"), Path("agent-dashboard") / "node_modules"}
+
+          def should_skip(path: Path) -> bool:
+              rel = path.relative_to(root)
+              if any(part in ignored_dirs for part in rel.parts):
+                  return True
+              if any(rel == prefix or prefix in rel.parents for prefix in ignored_path_prefixes):
+                  return True
+              if len(rel.parts) == 2 and rel.parts[0] == "data" and path.suffix == ".db":
+                  return True
+              return path.suffix in ignored_files
+
+          for source in root.rglob("*"):
+              if source == dist or dist in source.parents or should_skip(source):
+                  continue
+              target = package / source.relative_to(root)
+              if source.is_dir():
+                  target.mkdir(parents=True, exist_ok=True)
+              else:
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copy2(source, target)
+
+          shutil.make_archive(str(archive_base), "zip", package)
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v6
