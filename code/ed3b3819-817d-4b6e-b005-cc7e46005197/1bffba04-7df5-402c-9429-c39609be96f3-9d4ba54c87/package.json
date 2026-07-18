@@ -1,0 +1,26 @@
+{
+  "name": "wolfenstein-3d-style-browser-raycaster",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A browser-based Wolfenstein 3D style textured raycasting shooter game",
+  "scripts": {
+    "test": "npm run test:unit && npm run test:smoke",
+    "test:unit": "node tests/smoke_game.mjs",
+    "run_smoke": "npm run test:smoke",
+    "start": "node scripts/serve-static.mjs",
+    "build": "node --check src/main.js",
+    "test:smoke": "node tests/smoke_game.mjs"
+  },
+  "main": "src/main.js",
+  "keywords": [
+    "game",
+    "browser",
+    "javascript",
+    "wolfenstein",
+    "wolfenstein 3d style raycasting shooter",
+    "raycast",
+    "raycasting",
+    "fps shooter"
+  ]
+}
