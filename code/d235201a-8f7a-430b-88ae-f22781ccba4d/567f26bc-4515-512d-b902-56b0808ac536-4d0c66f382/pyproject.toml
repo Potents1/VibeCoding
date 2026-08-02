@@ -1,0 +1,23 @@
+[project]
+name = "btc-strategy-data"
+version = "0.1.0"
+description = "Reproducible Bitcoin daily data collection and preparation utilities."
+requires-python = ">=3.10"
+dependencies = [
+  "pandas>=2.0",
+]
+
+[project.optional-dependencies]
+download = [
+  "yfinance>=0.2.40",
+]
+test = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+btc-data = "btc_strategy_data.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

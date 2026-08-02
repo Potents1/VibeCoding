@@ -1,0 +1,115 @@
+# Managed by agentsystem fullstackdeveloper. Codex CLI and the VS Code Codex extension read project config.toml.
+[mcp_servers.agi-codex]
+type = "streamable_http"
+url = "http://localhost:8081/mcp/codex/"
+
+[mcp_servers.agi-codex.tools.lsp_workspace_symbols]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_workspace_symbols_scoped]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_find_files_for_symbol]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_document_symbols]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_document_symbols_batch]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_definition]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_type_definition]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_implementation]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_references]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_references_scoped]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_call_hierarchy]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_call_hierarchy_prepare]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_callers]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_callees]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_type_hierarchy_prepare]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_type_hierarchy_supertypes]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_type_hierarchy_subtypes]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_hover]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_signature_help]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_diagnostics]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_document_diagnostics]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_code_actions]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_prepare_rename]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_initialize]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_shutdown]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_list]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_get]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_explain]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_validate]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_execute]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_status]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_wait]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_events]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_result]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_cancel]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.lsp_pattern_trace]
+approval_mode = "approve"
+
+[mcp_servers.agi-codex.tools.list_tool_domains]
+approval_mode = "approve"

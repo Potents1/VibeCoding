@@ -1,0 +1,20 @@
+{
+  "columns": [
+    "date",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "daily_return",
+    "log_return",
+    "source_gap"
+  ],
+  "expected_days": 365,
+  "first_date": "2021-01-01",
+  "last_date": "2021-12-31",
+  "rows": 365,
+  "source_gap_days": 356,
+  "window_end": "2021-12-31",
+  "window_start": "2021-01-01"
+}
