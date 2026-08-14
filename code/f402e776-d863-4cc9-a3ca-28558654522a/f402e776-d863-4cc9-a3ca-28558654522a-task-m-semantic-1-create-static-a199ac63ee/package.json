@@ -1,0 +1,23 @@
+{
+  "name": "browser-chess",
+  "version": "1.0.0",
+  "description": "Playable browser-based chess game with legal move validation and deterministic smoke tests.",
+  "type": "module",
+  "scripts": {
+    "test": "npm run test:unit && npm run test:smoke",
+    "run_smoke": "npm run test:smoke",
+    "start": "node -e \"import('node:http').then(({createServer})=>{const fs=require('node:fs');const path=require('node:path');const root=process.cwd();const types={'.html':'text/html','.js':'text/javascript','.css':'text/css'};createServer((req,res)=>{const u=new URL(req.url,'http://localhost');let p=path.join(root,u.pathname==='/'?'index.html':u.pathname);if(!p.startsWith(root)){res.writeHead(403).end();return}fs.readFile(p,(e,d)=>{if(e){res.writeHead(404).end('Not found');return}res.writeHead(200,{'Content-Type':types[path.extname(p)]||'text/plain'}).end(d)})}).listen(4173,()=>console.log('http://localhost:4173'))})\"",
+    "build": "node --check src/main.js",
+    "test:unit": "node tests/smoke_game.mjs",
+    "test:smoke": "node tests/smoke_game.mjs"
+  },
+  "keywords": [
+    "chess",
+    "browser-game",
+    "legal-moves"
+  ],
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "main": "src/main.js"
+}
